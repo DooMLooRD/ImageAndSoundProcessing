@@ -22,7 +22,7 @@ namespace ImageProcessing.Core.NonLinearFilters
         {
             double sx = a[2][i] + (2 * a[3][i]) + a[4][i] - (a[0][i] + (2 * a[7][i]) + a[6][i]);
             double sy = a[0][i] + (2 * a[1][i]) + a[2][i] - (a[6][i] + (2 * a[5][i]) + a[4][i]);
-            return Math.Sqrt(sx * sx + sy * sy);
+            return Math.Sqrt((sx * sx) + (sy * sy));
         }
     }
 }
