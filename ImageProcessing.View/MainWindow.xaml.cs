@@ -1,4 +1,7 @@
-﻿using ImageProcessing.Core.NonLinearFilters;
+﻿using ImageProcessing.Core.BasicFilters;
+using ImageProcessing.Core.NonLinearFilters;
+using ImageProcessing.Core.BasicImageOperations;
+
 using System.Drawing;
 using System.Windows;
 
@@ -12,7 +15,7 @@ namespace ImageProcessing.View
         public MainWindow()
         {
             Bitmap bitmap = new Bitmap("test.jpg");
-            ImageProcessor.ProcessImage(bitmap, new UolisOperator(10000), "result.jpg");
+            ImageProcessor.ProcessImage(bitmap, new BrightnessOperation(-100), "result.jpg");
             InitializeComponent();
         }
     }

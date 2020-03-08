@@ -13,7 +13,9 @@ namespace ImageProcessing.Core.NonLinearFilters
 
             for (int i = 0; i < bytesPerPixel; i++)
             {
-                var result = (int)CalculateSobel(a, i);
+                var result = CalculateSobel(a, i);
+                result = ImageHelper.FixOverflow(result);
+
                 resultPixelPtr[i] = (byte)result;
             }
         }

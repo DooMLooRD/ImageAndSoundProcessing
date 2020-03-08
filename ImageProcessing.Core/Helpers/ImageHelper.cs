@@ -44,6 +44,27 @@
             return a;
         }
 
+        public unsafe static int[][] GetWindow(byte* firstPixelPtr, int xMiddle, int yMiddle, int rowWidth, int bytesPerPixel, int windowSize)
+        {
+            int[][] a = new int[bytesPerPixel][];
+
+            int xStart = xMiddle - (windowSize / 2 * bytesPerPixel);
+            int yStart = yMiddle - (windowSize / 2);
+
+            for (int i = 0; i < bytesPerPixel; i++)
+            {
+                a[i] = new int[windowSize * windowSize];
+                for (int j = 0; j < windowSize; j++)
+                {
+                    for (int k = 0; k < windowSize; k++)
+                    {
+                        a[i][j * windowSize + k] = (firstPixelPtr + (yStart + j) * rowWidth + (xStart + (k * bytesPerPixel)))[i];
+                    }
+                }
+            }
+
+            return a;
+        }
         public unsafe static byte* SetPixelPointer(byte* firstPixelPtr, int x, int y, int width)
         {
             return firstPixelPtr + y * width + x;
