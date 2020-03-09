@@ -15,7 +15,7 @@ namespace ImageProcessing.View
         public MainWindow()
         {
             Bitmap bitmap = new Bitmap("test.jpg");
-            ImageProcessor.ProcessImage(bitmap, new ContrastOperation(2), "result.jpg");
+            ImageProcessor.ProcessImage(bitmap, new NegativeOperation(), "result.jpg");
             InitializeComponent();
         }
     }

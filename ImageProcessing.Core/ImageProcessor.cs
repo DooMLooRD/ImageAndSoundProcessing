@@ -1,6 +1,7 @@
-﻿using ImageProcessing.Core.Interfaces;
+﻿using ImageProcessing.Core.Helpers;
+using ImageProcessing.Core.Interfaces;
+using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 
 namespace ImageProcessing
 {
@@ -8,30 +9,25 @@ namespace ImageProcessing
     {
         public static unsafe void ProcessImage(Bitmap bitmap, IProcessingOperation processBitmap, string fileName)
         {
-            var result = new Bitmap(bitmap.Width, bitmap.Height);
-
-            BitmapData bitmapData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadWrite, bitmap.PixelFormat);
-            BitmapData bitmapDataCopy = result.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadWrite, bitmap.PixelFormat);
-
-            int bytesPerPixel = Image.GetPixelFormatSize(bitmapData.PixelFormat) / 8;
-            int heightInPixels = bitmapData.Height;
-            int widthInBytes = bitmapData.Width * bytesPerPixel;
-
-            byte* firstPixelPtr = (byte*)bitmapData.Scan0;
-            byte* firstPixelPtrCopy = (byte*)bitmapDataCopy.Scan0;
-
-            for (int y = 1; y < heightInPixels - 1; y++)
+            Bitmap resultBitmap;
+            using (var bitmapData = new CustomBitmapData(bitmap, true))
             {
-                for (int x = bytesPerPixel; x < widthInBytes - bytesPerPixel; x = x + bytesPerPixel)
+                resultBitmap = bitmapData.CopyBitmap;
+                for (int y = 1; y < bitmapData.HeightInPixels - 1; y++)
                 {
-                    processBitmap.ProcessPixel(firstPixelPtr, x, y, bitmapData.Stride, bytesPerPixel, firstPixelPtrCopy);
+                    for (int x = bitmapData.BytesPerPixel; x < bitmapData.WidthInBytes - bitmapData.BytesPerPixel; x = x + bitmapData.BytesPerPixel)
+                    {
+                        processBitmap.ProcessPixel(bitmapData.FirstPixelPtr, x, y, bitmapData.OriginalBitmapData.Stride, bitmapData.BytesPerPixel, bitmapData.FirstPixelPtrCopy);
+                    }
                 }
+
             }
-
-            bitmap.UnlockBits(bitmapData);
-            result.UnlockBits(bitmapDataCopy);
-
-            result.Save(fileName);
+            resultBitmap.Save(fileName);
         }
+
+        //public unsafe IEnumerable<(int, ColorValues)> CreateHistogram()
+        //{
+
+        //}
     }
 }
