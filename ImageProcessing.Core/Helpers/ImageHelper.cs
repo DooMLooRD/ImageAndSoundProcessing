@@ -1,4 +1,7 @@
-﻿namespace ImageProcessing.Core.Helpers
+﻿using System.Drawing;
+using System.Drawing.Imaging;
+
+namespace ImageProcessing.Core.Helpers
 {
     public class ImageHelper
     {

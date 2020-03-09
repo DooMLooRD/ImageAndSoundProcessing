@@ -33,9 +33,10 @@ namespace ImageProcessing.Core.Helpers
             WidthInBytes = OriginalBitmapData.Width * BytesPerPixel;
             FirstPixelPtr = (byte*)OriginalBitmapData.Scan0;
 
+
             if (CreateCopy)
             {
-                CopyBitmap = new Bitmap(bitmap.Width, bitmap.Height);
+                CopyBitmap = new Bitmap(bitmap.Width, bitmap.Height, bitmap.PixelFormat);
                 CopyBitmapData = CopyBitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadWrite, bitmap.PixelFormat);
                 FirstPixelPtrCopy = (byte*)CopyBitmapData.Scan0;
             }
