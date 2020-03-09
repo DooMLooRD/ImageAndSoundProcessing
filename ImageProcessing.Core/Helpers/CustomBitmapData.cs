@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Text;
 
 namespace ImageProcessing.Core.Helpers
 {
@@ -27,17 +25,22 @@ namespace ImageProcessing.Core.Helpers
             CreateCopy = createCopy;
             OriginalBitmap = bitmap;
 
-            OriginalBitmapData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadWrite, bitmap.PixelFormat);
+            if (OriginalBitmap.PixelFormat == PixelFormat.Format8bppIndexed || OriginalBitmap.PixelFormat == PixelFormat.Format1bppIndexed)
+            {
+                ImageHelper.ConvertToPixelFormat(bitmap, out Bitmap result, PixelFormat.Format24bppRgb);
+                OriginalBitmap = result;
+            }
+
+            OriginalBitmapData = OriginalBitmap.LockBits(new Rectangle(0, 0, OriginalBitmap.Width, OriginalBitmap.Height), ImageLockMode.ReadWrite, OriginalBitmap.PixelFormat);
             BytesPerPixel = Image.GetPixelFormatSize(OriginalBitmapData.PixelFormat) / 8;
             HeightInPixels = OriginalBitmapData.Height;
             WidthInBytes = OriginalBitmapData.Width * BytesPerPixel;
             FirstPixelPtr = (byte*)OriginalBitmapData.Scan0;
 
-
             if (CreateCopy)
             {
-                CopyBitmap = new Bitmap(bitmap.Width, bitmap.Height, bitmap.PixelFormat);
-                CopyBitmapData = CopyBitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadWrite, bitmap.PixelFormat);
+                CopyBitmap = new Bitmap(OriginalBitmap.Width, OriginalBitmap.Height, OriginalBitmap.PixelFormat);
+                CopyBitmapData = CopyBitmap.LockBits(new Rectangle(0, 0, OriginalBitmap.Width, OriginalBitmap.Height), ImageLockMode.ReadWrite, OriginalBitmap.PixelFormat);
                 FirstPixelPtrCopy = (byte*)CopyBitmapData.Scan0;
             }
         }

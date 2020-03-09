@@ -1,6 +1,4 @@
-﻿using ImageProcessing.Core.BasicFilters;
-using ImageProcessing.Core.NonLinearFilters;
-using ImageProcessing.Core.BasicImageOperations;
+﻿using ImageProcessing.Core.BasicImageOperations;
 
 using System.Drawing;
 using System.Windows;
@@ -14,8 +12,8 @@ namespace ImageProcessing.View
     {
         public MainWindow()
         {
-            Bitmap bitmap = new Bitmap("test2.jpg");
-            ImageProcessor.ProcessImage(bitmap, new AverageFilter(3), "result.jpg", 3);
+            Bitmap bitmap = new Bitmap("test1.bmp");
+            ImageProcessor.ProcessImage(bitmap, new NegativeOperation(), "result.jpg", 0);
             InitializeComponent();
         }
     }

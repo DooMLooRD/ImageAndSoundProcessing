@@ -79,5 +79,14 @@ namespace ImageProcessing.Core.Helpers
             currentPixelPtr += y * width + x;
             return currentPixelPtr;
         }
+
+        public static void ConvertToPixelFormat(Bitmap bitmap, out Bitmap result, PixelFormat pixelFormat)
+        {
+            result = new Bitmap(bitmap.Width, bitmap.Height, pixelFormat);
+
+            Graphics g = Graphics.FromImage(result);
+            g.DrawImage(bitmap, 0, 0, bitmap.Width, bitmap.Height);
+            g.Dispose();
+        }
     }
 }

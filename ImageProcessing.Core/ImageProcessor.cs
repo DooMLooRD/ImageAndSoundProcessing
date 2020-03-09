@@ -1,14 +1,13 @@
 ﻿using ImageProcessing.Core.Helpers;
 using ImageProcessing.Core.Interfaces;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 
 namespace ImageProcessing
 {
     public class ImageProcessor
     {
-        public static unsafe void ProcessImage(Bitmap bitmap, IProcessingOperation processBitmap, string fileName, int windowSize)
+
+        public static unsafe void ProcessImage(Bitmap bitmap, IProcessingOperation processBitmap, string fileName, int windowSize = 0)
         {
             int offset = windowSize / 2;
             Bitmap resultBitmap;

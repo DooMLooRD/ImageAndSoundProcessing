@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ImageProcessing.Core.Helpers
+﻿namespace ImageProcessing.Core.Helpers
 {
     public struct ColorValues
     {
