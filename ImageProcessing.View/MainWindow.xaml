@@ -5,8 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ImageProcessing.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="500" Width="1300">
     <Grid>
-        <Button></Button>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
+            <Button Margin="6" Content="Load From File" Command="{Binding LoadFileCommand}"/>
+            <ComboBox Margin="6" ItemsSource="{Binding Operations}" SelectedItem="{Binding SelectedOperation}"/>
+            <TextBlock Margin="6" Text="Window Size (*)"/>
+            <TextBox Margin="6" Text="{Binding WindowSize}"/>
+            <TextBlock Margin="6" Text="Brightness Factor (**)"/>
+            <TextBox Margin="6" Text="{Binding BrightnessFactor}"/>
+            <TextBlock Margin="6" Text="Contrast Factor (***)"/>
+            <TextBox Margin="6" Text="{Binding ContrastFactor}"/>
+            <TextBlock Margin="6" Text="Uolis Normalization (****)"/>
+            <TextBox Margin="6" Text="{Binding UolisFactor}"/>
+            <Button Margin="6" Content="Apply" Command="{Binding ApplyOperationCommand}"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1">
+            <TextBlock Margin="6" Text="Original Image"/>
+            <Image  Margin="6" Source="{Binding OriginalImage}"/>
+        </StackPanel>
+        <StackPanel Grid.Column="2">
+            <TextBlock Margin="6" Text="Processed Image"/>
+            <Image  Margin="6" Source="{Binding ResultImage}"/>
+        </StackPanel>
     </Grid>
 </Window>

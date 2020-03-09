@@ -1,5 +1,5 @@
 ﻿using ImageProcessing.Core.BasicImageOperations;
-
+using ImageProcessing.View.ViewModel;
 using System.Drawing;
 using System.Windows;
 
@@ -12,8 +12,7 @@ namespace ImageProcessing.View
     {
         public MainWindow()
         {
-            Bitmap bitmap = new Bitmap("test1.bmp");
-            ImageProcessor.ProcessImage(bitmap, new NegativeOperation(), "result.jpg", 0);
+            DataContext = new MainWindowViewModel();
             InitializeComponent();
         }
     }

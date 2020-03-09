@@ -7,9 +7,8 @@ namespace ImageProcessing
     public class ImageProcessor
     {
 
-        public static unsafe void ProcessImage(Bitmap bitmap, IProcessingOperation processBitmap, string fileName, int windowSize = 0)
+        public static unsafe Bitmap ProcessImage(Bitmap bitmap, IProcessingOperation processBitmap, int offset = 0)
         {
-            int offset = windowSize / 2;
             Bitmap resultBitmap;
             using (var bitmapData = new CustomBitmapData(bitmap, true))
             {
@@ -24,7 +23,7 @@ namespace ImageProcessing
 
             }
 
-            resultBitmap.Save(fileName);
+            return resultBitmap;
         }
 
         //public unsafe IEnumerable<(int, ColorValues)> CreateHistogram()
