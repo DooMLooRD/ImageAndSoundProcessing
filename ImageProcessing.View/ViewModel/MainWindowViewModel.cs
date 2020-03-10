@@ -1,6 +1,7 @@
 ﻿using ImageProcessing.Core.BasicFilters;
 using ImageProcessing.Core.BasicImageOperations;
 using ImageProcessing.Core.Interfaces;
+using ImageProcessing.Core.LinearFilters;
 using ImageProcessing.Core.NonLinearFilters;
 using ImageProcessing.View.ViewModel.Base;
 using Microsoft.Win32;
@@ -33,20 +34,18 @@ namespace ImageProcessing.View.ViewModel
         public int BrightnessFactor { get; set; } = 100;
         public int UolisFactor { get; set; } = 1000;
 
-        public int MaskX { get; set; }
-        public int MaskY { get; set; }
+        public int MaskSize { get; set; }
         public ICommand SetMaskTabCommand { get; set; }
         public DataView Mask { get; set; }
 
         public MainWindowViewModel()
         {
-            MaskX = 3;
-            MaskY = 3;
+            MaskSize = 3;
             SetMaskTab();
             LoadFileCommand = new RelayCommand(LoadImage);
             ApplyOperationCommand = new RelayCommand(ApplyOperation);
             SetMaskTabCommand = new RelayCommand(SetMaskTab);
-            Operations = new[] { "Negative", "Brightness (**)", "Contrast (***)", "Average Filter (*)", "Median Filter (*)", "Sobel Operator", "Uolis Operator (****)" };
+            Operations = new[] { "Negative", "Brightness (**)", "Contrast (***)", "Average Filter (*)", "Linear Filter", "Median Filter (*)", "Sobel Operator", "Uolis Operator (****)" };
             SelectedOperation = "Negative";
         }
 
@@ -55,16 +54,16 @@ namespace ImageProcessing.View.ViewModel
             var dataTable = new DataTable();
             dataTable.Columns.Add("#", Type.GetType("System.Int32"));
 
-            for (int i = 0; i < MaskX; i++)
+            for (int i = 0; i < MaskSize; i++)
             {
                 dataTable.Columns.Add($"{i + 1}", Type.GetType("System.Int32"));
             }
 
-            for (int i = 0; i < MaskY; i++)
+            for (int i = 0; i < MaskSize; i++)
             {
                 var row = dataTable.NewRow();
                 row["#"] = i + 1;
-                for (int j = 0; j < MaskX; j++)
+                for (int j = 0; j < MaskSize; j++)
                 {
                     row[$"{j + 1}"] = 0;
                 }
@@ -73,16 +72,15 @@ namespace ImageProcessing.View.ViewModel
             Mask = dataTable.AsDataView();
         }
 
-        public int[][] ReadMask()
+        public int[] ReadMask()
         {
-            var tab = new int[MaskY][];
+            var tab = new int[MaskSize * MaskSize];
             var rows = Mask.Table.Rows;
-            for (int i = 0; i < MaskY; i++)
+            for (int i = 0; i < MaskSize; i++)
             {
-                tab[i] = new int[MaskX];
-                for (int j = 0; j < MaskX; j++)
+                for (int j = 0; j < MaskSize; j++)
                 {
-                    tab[i][j] = (int)rows[i][j + 1];
+                    tab[i * MaskSize + j] = (int)rows[i][j + 1];
                 }
             }
             return tab;
@@ -118,6 +116,10 @@ namespace ImageProcessing.View.ViewModel
                 case "Average Filter (*)":
                     operation = new AverageFilter(WindowSize);
                     offset = WindowSize / 2;
+                    break;
+                case "Linear Filter":
+                    operation = new LinearFilter(ReadMask(), MaskSize);
+                    offset = MaskSize / 2;
                     break;
                 case "Median Filter (*)":
                     operation = new MedianFilter(WindowSize);

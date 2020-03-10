@@ -25,10 +25,8 @@
             <TextBox Margin="6" Text="{Binding UolisFactor}"/>
             <Button Margin="6" Content="Apply" Command="{Binding ApplyOperationCommand}"/>
 
-            <TextBlock Margin="6" Text="Mask x"/>
-            <TextBox Margin="6" Text="{Binding MaskX}"/>
-            <TextBlock Margin="6" Text="Mask y"/>
-            <TextBox Margin="6" Text="{Binding MaskY}"/>
+            <TextBlock Margin="6" Text="Mask size"/>
+            <TextBox Margin="6" Text="{Binding MaskSize}"/>
             <Button Margin="6" Content="Create Mask Table" Command="{Binding SetMaskTabCommand}"/>
             <DataGrid 
                 CanUserReorderColumns="False"
