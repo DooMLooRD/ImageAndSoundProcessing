@@ -12,22 +12,60 @@
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
+        
+        <!-- Image processing configuration START -->
         <StackPanel Grid.Column="0">
-            <Button Margin="6" Content="Load From File" Command="{Binding LoadFileCommand}"/>
-            <ComboBox Margin="6" ItemsSource="{Binding Operations}" SelectedItem="{Binding SelectedOperation}"/>
-            <TextBlock Margin="6" Text="Window Size (*)"/>
-            <TextBox Margin="6" Text="{Binding WindowSize}"/>
-            <TextBlock Margin="6" Text="Brightness Factor (**)"/>
-            <TextBox Margin="6" Text="{Binding BrightnessFactor}"/>
-            <TextBlock Margin="6" Text="Contrast Factor (***)"/>
-            <TextBox Margin="6" Text="{Binding ContrastFactor}"/>
-            <TextBlock Margin="6" Text="Uolis Normalization (****)"/>
-            <TextBox Margin="6" Text="{Binding UolisFactor}"/>
-            <Button Margin="6" Content="Apply" Command="{Binding ApplyOperationCommand}"/>
-
-            <TextBlock Margin="6" Text="Mask size"/>
-            <TextBox Margin="6" Text="{Binding MaskSize}"/>
-            <Button Margin="6" Content="Create Mask Table" Command="{Binding SetMaskTabCommand}"/>
+            <Button 
+                Margin="6" 
+                Content="Load From File" 
+                Command="{Binding LoadFileCommand}"/>
+            <ComboBox 
+                Margin="6" 
+                ItemsSource="{Binding Operations}" 
+                SelectedItem="{Binding SelectedOperation}"/>
+            <TextBlock 
+                Margin="6" 
+                Text="Window Size (*)"/>
+            <TextBox 
+                Margin="6" 
+                Text="{Binding WindowSize}"/>
+            <TextBlock 
+                Margin="6" 
+                Text="Brightness Factor (**)"/>
+            <TextBox 
+                Margin="6" 
+                Text="{Binding BrightnessFactor}"/>
+            <TextBlock 
+                Margin="6" 
+                Text="Contrast Factor (***)"/>
+            <TextBox 
+                Margin="6" 
+                Text="{Binding ContrastFactor}"/>
+            <TextBlock 
+                Margin="6" 
+                Text="Uolis Normalization (****)"/>
+            <TextBox 
+                Margin="6" 
+                Text="{Binding UolisFactor}"/>
+            <CheckBox 
+                Margin="6" 
+                Content="Convert Result to Greyscale" 
+                IsChecked="{Binding ConvertResultToGreyscale}"/>
+            <Button 
+                Margin="6" 
+                Content="Apply" 
+                Command="{Binding ApplyOperationCommand}"/>
+            
+            <TextBlock 
+                Margin="6" 
+                Text="Mask size"/>
+            <TextBox 
+                Margin="6" 
+                Text="{Binding MaskSize}"/>
+            <Button 
+                Margin="6" 
+                Content="Create Mask Table" 
+                Command="{Binding SetMaskTabCommand}"/>
             <DataGrid 
                 CanUserReorderColumns="False"
                 CanUserResizeColumns="False"
@@ -39,13 +77,28 @@
                 Margin="6" 
                 ItemsSource="{Binding Mask}"/>
         </StackPanel>
+        <!-- Image processing configuration END -->
+
+        <!-- Original Image START -->
         <StackPanel Grid.Column="1">
-            <TextBlock Margin="6" Text="Original Image"/>
-            <Image Margin="6" Source="{Binding OriginalImage}"/>
+            <TextBlock 
+                Margin="6" 
+                Text="Original Image"/>
+            <Image 
+                Margin="6" 
+                Source="{Binding OriginalImage}"/>
         </StackPanel>
+        <!-- Original Image END -->
+
+        <!-- Result Image START -->
         <StackPanel Grid.Column="2">
-            <TextBlock Margin="6" Text="Processed Image"/>
-            <Image  Margin="6" Source="{Binding ResultImage}"/>
+            <TextBlock 
+                Margin="6" 
+                Text="Processed Image"/>
+            <Image  
+                Margin="6" 
+                Source="{Binding ResultImage}"/>
         </StackPanel>
+        <!-- Result Image END -->
     </Grid>
 </Window>

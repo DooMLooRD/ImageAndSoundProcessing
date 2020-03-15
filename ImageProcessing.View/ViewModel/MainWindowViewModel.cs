@@ -33,6 +33,7 @@ namespace ImageProcessing.View.ViewModel
         public double ContrastFactor { get; set; } = 10;
         public int BrightnessFactor { get; set; } = 100;
         public int UolisFactor { get; set; } = 1000;
+        public bool ConvertResultToGreyscale { get; set; } = false;
 
         public int MaskSize { get; set; }
         public ICommand SetMaskTabCommand { get; set; }
@@ -45,8 +46,17 @@ namespace ImageProcessing.View.ViewModel
             LoadFileCommand = new RelayCommand(LoadImage);
             ApplyOperationCommand = new RelayCommand(ApplyOperation);
             SetMaskTabCommand = new RelayCommand(SetMaskTab);
-            Operations = new[] { "Negative", "Brightness (**)", "Contrast (***)", "Average Filter (*)", "Linear Filter", "Median Filter (*)", "Sobel Operator", "Uolis Operator (****)" };
-            SelectedOperation = "Negative";
+            Operations = new[] {
+                "Greyscale",
+                "Negative",
+                "Brightness (**)",
+                "Contrast (***)",
+                "Average Filter (*)",
+                "Linear Filter",
+                "Median Filter (*)",
+                "Sobel Operator",
+                "Uolis Operator (****)" };
+            SelectedOperation = "Greyscale";
         }
 
         public void SetMaskTab()
@@ -104,6 +114,9 @@ namespace ImageProcessing.View.ViewModel
             var offset = 0;
             switch (SelectedOperation)
             {
+                case "Greyscale":
+                    operation = new GreyscaleOperation();
+                    break;
                 case "Negative":
                     operation = new NegativeOperation();
                     break;
@@ -138,6 +151,12 @@ namespace ImageProcessing.View.ViewModel
                     break;
             }
             var result = ImageProcessor.ProcessImage(OriginalBitmap, operation, offset);
+
+            if (ConvertResultToGreyscale)
+            {
+                result = ImageProcessor.ProcessImage(result, new GreyscaleOperation());
+            }
+
             ResultImage = LoadBitmap(result);
         }
 
