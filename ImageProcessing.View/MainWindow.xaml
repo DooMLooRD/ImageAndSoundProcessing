@@ -5,6 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ImageProcessing.View"
         mc:Ignorable="d"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+     TextElement.FontWeight="Regular"
+     TextElement.FontSize="13"
+     TextOptions.TextFormattingMode="Ideal"
+     TextOptions.TextRenderingMode="Auto"
+     Background="{DynamicResource MaterialDesignPaper}"
+     FontFamily="{DynamicResource MaterialDesignFont}"
         Title="MainWindow" Height="700" Width="1300">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -12,7 +20,7 @@
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        
+
         <!-- Image processing configuration START -->
         <StackPanel Grid.Column="0">
             <Button 
@@ -55,7 +63,7 @@
                 Margin="6" 
                 Content="Apply" 
                 Command="{Binding ApplyOperationCommand}"/>
-            
+
             <TextBlock 
                 Margin="6" 
                 Text="Mask size"/>
