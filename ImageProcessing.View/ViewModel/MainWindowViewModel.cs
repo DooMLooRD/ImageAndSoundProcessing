@@ -26,7 +26,7 @@ namespace ImageProcessing.View.ViewModel
         public IEnumerable<string> Operations { get; set; }
         public string SelectedOperation { get; set; }
 
-        public ICommand LoadFileCommand { get; set; }
+        public ICommand Open { get; set; }
         public ICommand ApplyOperationCommand { get; set; }
 
         public int WindowSize { get; set; } = 3;
@@ -43,7 +43,7 @@ namespace ImageProcessing.View.ViewModel
         {
             MaskSize = 3;
             SetMaskTab();
-            LoadFileCommand = new RelayCommand(LoadImage);
+            Open = new RelayCommand(LoadImage);
             ApplyOperationCommand = new RelayCommand(ApplyOperation);
             SetMaskTabCommand = new RelayCommand(SetMaskTab);
             Operations = new[] {

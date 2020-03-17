@@ -14,67 +14,76 @@
      Background="{DynamicResource MaterialDesignPaper}"
      FontFamily="{DynamicResource MaterialDesignFont}"
         Title="MainWindow" Height="700" Width="1300">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="3*"/>
-        </Grid.ColumnDefinitions>
+    <StackPanel>
 
-        <!-- Image processing configuration START -->
-        <StackPanel Grid.Column="0">
-            <Button 
-                Margin="6" 
-                Content="Load From File" 
-                Command="{Binding LoadFileCommand}"/>
-            <ComboBox 
+        <Menu 
+            IsMainMenu="True">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Open" Command="{Binding Open}">
+                    <MenuItem.Icon>
+                        <materialDesign:PackIcon Kind="OpenInApp"></materialDesign:PackIcon>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Image processing configuration START -->
+            <StackPanel Grid.Column="0">
+                <ComboBox 
                 Margin="6" 
                 ItemsSource="{Binding Operations}" 
                 SelectedItem="{Binding SelectedOperation}"/>
-            <TextBlock 
+                <TextBlock 
                 Margin="6" 
                 Text="Window Size (*)"/>
-            <TextBox 
+                <TextBox 
                 Margin="6" 
                 Text="{Binding WindowSize}"/>
-            <TextBlock 
+                <TextBlock 
                 Margin="6" 
                 Text="Brightness Factor (**)"/>
-            <TextBox 
+                <TextBox 
                 Margin="6" 
                 Text="{Binding BrightnessFactor}"/>
-            <TextBlock 
+                <TextBlock 
                 Margin="6" 
                 Text="Contrast Factor (***)"/>
-            <TextBox 
+                <TextBox 
                 Margin="6" 
                 Text="{Binding ContrastFactor}"/>
-            <TextBlock 
+                <TextBlock 
                 Margin="6" 
                 Text="Uolis Normalization (****)"/>
-            <TextBox 
+                <TextBox 
                 Margin="6" 
                 Text="{Binding UolisFactor}"/>
-            <CheckBox 
+                <CheckBox 
                 Margin="6" 
                 Content="Convert Result to Greyscale" 
                 IsChecked="{Binding ConvertResultToGreyscale}"/>
-            <Button 
+                <Button 
                 Margin="6" 
                 Content="Apply" 
                 Command="{Binding ApplyOperationCommand}"/>
 
-            <TextBlock 
+                <TextBlock 
                 Margin="6" 
                 Text="Mask size"/>
-            <TextBox 
+                <TextBox 
                 Margin="6" 
                 Text="{Binding MaskSize}"/>
-            <Button 
+                <Button 
                 Margin="6" 
                 Content="Create Mask Table" 
                 Command="{Binding SetMaskTabCommand}"/>
-            <DataGrid 
+                <DataGrid 
                 CanUserReorderColumns="False"
                 CanUserResizeColumns="False"
                 CanUserResizeRows="False" 
@@ -84,29 +93,31 @@
                 ColumnWidth="*"
                 Margin="6" 
                 ItemsSource="{Binding Mask}"/>
-        </StackPanel>
-        <!-- Image processing configuration END -->
+            </StackPanel>
+            <!-- Image processing configuration END -->
 
-        <!-- Original Image START -->
-        <StackPanel Grid.Column="1">
-            <TextBlock 
+            <!-- Original Image START -->
+            <StackPanel Grid.Column="1">
+                <TextBlock 
                 Margin="6" 
                 Text="Original Image"/>
-            <Image 
+                <Image 
                 Margin="6" 
                 Source="{Binding OriginalImage}"/>
-        </StackPanel>
-        <!-- Original Image END -->
+            </StackPanel>
+            <!-- Original Image END -->
 
-        <!-- Result Image START -->
-        <StackPanel Grid.Column="2">
-            <TextBlock 
+            <!-- Result Image START -->
+            <StackPanel Grid.Column="2">
+                <TextBlock 
                 Margin="6" 
                 Text="Processed Image"/>
-            <Image  
+                <Image  
                 Margin="6" 
                 Source="{Binding ResultImage}"/>
-        </StackPanel>
-        <!-- Result Image END -->
-    </Grid>
+            </StackPanel>
+            <!-- Result Image END -->
+        </Grid>
+    </StackPanel>
+
 </Window>
