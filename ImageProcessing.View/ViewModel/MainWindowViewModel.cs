@@ -4,6 +4,7 @@ using ImageProcessing.Core.Interfaces;
 using ImageProcessing.Core.LinearFilters;
 using ImageProcessing.Core.NonLinearFilters;
 using ImageProcessing.View.ViewModel.Base;
+using ImageProcessing.View.Windows;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,8 @@ namespace ImageProcessing.View.ViewModel
     {
         public System.Drawing.Bitmap OriginalBitmap { get; set; }
         public ImageSource OriginalImage { get; set; }
+        //public ImageSource LargeImage { get; set; }
+
         public ImageSource ResultImage { get; set; }
 
         public IEnumerable<string> Operations { get; set; }
@@ -28,6 +31,8 @@ namespace ImageProcessing.View.ViewModel
 
         public ICommand Open { get; set; }
         public ICommand ApplyOperationCommand { get; set; }
+        public ICommand EnlargeOriginalImage { get; set; }
+        public ICommand EnlargeResultImage { get; set; }
 
         public int WindowSize { get; set; } = 3;
         public double ContrastFactor { get; set; } = 10;
@@ -45,6 +50,8 @@ namespace ImageProcessing.View.ViewModel
             SetMaskTab();
             Open = new RelayCommand(LoadImage);
             ApplyOperationCommand = new RelayCommand(ApplyOperation);
+            EnlargeOriginalImage = new RelayCommand(() => ShowImageInFullWindow(OriginalImage));
+            EnlargeResultImage = new RelayCommand(() => ShowImageInFullWindow(ResultImage));
             SetMaskTabCommand = new RelayCommand(SetMaskTab);
             Operations = new[] {
                 "Greyscale",
@@ -106,6 +113,16 @@ namespace ImageProcessing.View.ViewModel
                 OriginalBitmap = new System.Drawing.Bitmap(openFileDialog.FileName);
                 OriginalImage = LoadBitmap(OriginalBitmap);
             }
+        }
+
+        public void ShowImageInFullWindow(ImageSource imageToShow)
+        {
+            EnlargedImageWindowVM vm = new EnlargedImageWindowVM(imageToShow);
+            EnlargedImageWindow window = new EnlargedImageWindow()
+            {
+                DataContext = vm
+            };
+            window.Show();
         }
 
         public void ApplyOperation()
