@@ -30,71 +30,72 @@ namespace ImageProcessing.Core.Helpers
             return value;
         }
 
-        public unsafe static byte*[] GetNeighborhood(byte* firstPixelPtr, int x, int y, int width, int bytesPerPixel)
+        public unsafe static byte*[] GetNeighborhood(CustomBitmapData bitmapData, int x, int y)
         {
             byte*[] a = new byte*[8];
 
-            a[0] = firstPixelPtr + (y - 1) * width + (x - bytesPerPixel);
-            a[1] = firstPixelPtr + (y - 1) * width + x;
-            a[2] = firstPixelPtr + (y - 1) * width + (x + bytesPerPixel);
-            a[3] = firstPixelPtr + y * width + (x + bytesPerPixel);
-
-            a[4] = firstPixelPtr + (y + 1) * width + (x + bytesPerPixel);
-            a[5] = firstPixelPtr + (y + 1) * width + x;
-            a[6] = firstPixelPtr + (y + 1) * width + (x - bytesPerPixel);
-            a[7] = firstPixelPtr + y * width + (x - bytesPerPixel);
+            a[0] = bitmapData.FirstPixelPtr + (y - 1) * bitmapData.WidthInBytes+ (x - bitmapData.BytesPerPixel);
+            a[1] = bitmapData.FirstPixelPtr + (y - 1) * bitmapData.WidthInBytes + x;
+            a[2] = bitmapData.FirstPixelPtr + (y - 1) * bitmapData.WidthInBytes + (x + bitmapData.BytesPerPixel);
+            a[3] = bitmapData.FirstPixelPtr + y * bitmapData.WidthInBytes + (x + bitmapData.BytesPerPixel);
+            a[4] = bitmapData.FirstPixelPtr + (y + 1) * bitmapData.WidthInBytes + (x + bitmapData.BytesPerPixel);
+            a[5] = bitmapData.FirstPixelPtr + (y + 1) * bitmapData.WidthInBytes + x;
+            a[6] = bitmapData.FirstPixelPtr + (y + 1) * bitmapData.WidthInBytes + (x - bitmapData.BytesPerPixel);
+            a[7] = bitmapData.FirstPixelPtr + y * bitmapData.WidthInBytes + (x - bitmapData.BytesPerPixel);
 
             return a;
         }
 
-        public unsafe static byte*[] GetWindowPtrs(byte* firstPixelPtr, int xMiddle, int yMiddle, int rowWidth, int bytesPerPixel, int windowSize)
+        public unsafe static byte*[] GetWindowPtrs(CustomBitmapData bitmapData, int xMiddle, int yMiddle, int windowSize)
         {
             byte*[] a = new byte*[windowSize * windowSize];
 
-            int xStart = xMiddle - (windowSize / 2 * bytesPerPixel);
+            int xStart = xMiddle - (windowSize / 2 * bitmapData.BytesPerPixel);
             int yStart = yMiddle - (windowSize / 2);
 
             for (int j = 0; j < windowSize; j++)
             {
                 for (int k = 0; k < windowSize; k++)
                 {
-                    a[j * windowSize + k] = firstPixelPtr + (yStart + j) * rowWidth + (xStart + (k * bytesPerPixel));
+                    a[j * windowSize + k] = bitmapData.FirstPixelPtr + (yStart + j)
+                        * bitmapData.WidthInBytes + (xStart + (k * bitmapData.BytesPerPixel));
                 }
             }
 
             return a;
         }
 
-        public unsafe static int[][] GetWindow(byte* firstPixelPtr, int xMiddle, int yMiddle, int rowWidth, int bytesPerPixel, int windowSize)
+        public unsafe static int[][] GetWindow(CustomBitmapData bitmapData, int xMiddle, int yMiddle, int windowSize)
         {
-            int[][] a = new int[bytesPerPixel][];
+            int[][] a = new int[bitmapData.BytesPerPixel][];
 
-            int xStart = xMiddle - (windowSize / 2 * bytesPerPixel);
+            int xStart = xMiddle - (windowSize / 2 * bitmapData.BytesPerPixel);
             int yStart = yMiddle - (windowSize / 2);
 
-            for (int i = 0; i < bytesPerPixel; i++)
+            for (int i = 0; i < bitmapData.BytesPerPixel; i++)
             {
                 a[i] = new int[windowSize * windowSize];
                 for (int j = 0; j < windowSize; j++)
                 {
                     for (int k = 0; k < windowSize; k++)
                     {
-                        a[i][j * windowSize + k] = (firstPixelPtr + (yStart + j) * rowWidth + (xStart + (k * bytesPerPixel)))[i];
+                        a[i][j * windowSize + k] = (bitmapData.FirstPixelPtr + (yStart + j) *
+                            bitmapData.WidthInBytes + (xStart + (k * bitmapData.BytesPerPixel)))[i];
                     }
                 }
             }
 
             return a;
         }
-        public unsafe static byte* SetPixelPointer(byte* firstPixelPtr, int x, int y, int width)
+        public unsafe static byte* SetPixelPointer(CustomBitmapData bitmapData, int x, int y)
         {
-            return firstPixelPtr + y * width + x;
+            return bitmapData.FirstPixelPtr + y * bitmapData.WidthInBytes + x;
         }
 
-        public unsafe static byte* SetResultPixelPointer(byte* firstPixelPtr, int x, int y, int width, byte* copy = null)
+        public unsafe static byte* SetResultPixelPointer(CustomBitmapData bitmapData, int x, int y)
         {
-            byte* currentPixelPtr = copy == null ? firstPixelPtr : copy;
-            currentPixelPtr += y * width + x;
+            byte* currentPixelPtr = bitmapData.FirstPixelPtrCopy;
+            currentPixelPtr += y * bitmapData.WidthInBytes + x;
             return currentPixelPtr;
         }
 

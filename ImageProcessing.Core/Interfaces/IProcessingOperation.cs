@@ -1,7 +1,9 @@
-﻿namespace ImageProcessing.Core.Interfaces
+﻿using ImageProcessing.Core.Helpers;
+
+namespace ImageProcessing.Core.Interfaces
 {
     public interface IProcessingOperation
     {
-        unsafe void ProcessPixel(byte* firstPixelPtr, int x, int y, int width, int bytesPerPixel, byte* copy = null);
+        unsafe void ProcessPixel(CustomBitmapData customBitmap, int x, int y);
     }
 }

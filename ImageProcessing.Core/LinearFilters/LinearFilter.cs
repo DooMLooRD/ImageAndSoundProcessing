@@ -14,12 +14,12 @@ namespace ImageProcessing.Core.LinearFilters
             _maskSize = maskSize;
         }
 
-        public unsafe void ProcessPixel(byte* firstPixelPtr, int x, int y, int width, int bytesPerPixel, byte* copy = null)
+        public unsafe void ProcessPixel(CustomBitmapData customBitmap, int x, int y)
         {
-            byte* resultPixelPtr = ImageHelper.SetResultPixelPointer(firstPixelPtr, x, y, width, copy);
-            byte*[] a = ImageHelper.GetWindowPtrs(firstPixelPtr, x, y, width, bytesPerPixel, _maskSize);
+            byte* resultPixelPtr = ImageHelper.SetResultPixelPointer(customBitmap, x, y);
+            byte*[] a = ImageHelper.GetWindowPtrs(customBitmap, x, y, _maskSize);
 
-            for (int i = 0; i < bytesPerPixel; i++)
+            for (int i = 0; i < customBitmap.BytesPerPixel; i++)
             {
                 var result = 0;
                 for (int j = 0; j < _maskSize * _maskSize; j++)

@@ -5,12 +5,12 @@ namespace ImageProcessing.Core.BasicImageOperations
 {
     public class NegativeOperation : IProcessingOperation
     {
-        public unsafe void ProcessPixel(byte* firstPixelPtr, int x, int y, int width, int bytesPerPixel, byte* copy = null)
+        public unsafe void ProcessPixel(CustomBitmapData customBitmap, int x, int y)
         {
-            byte* resultPixelPtr = ImageHelper.SetResultPixelPointer(firstPixelPtr, x, y, width, copy);
-            byte* currentPixelPtr = ImageHelper.SetPixelPointer(firstPixelPtr, x, y, width);
+            byte* resultPixelPtr = ImageHelper.SetResultPixelPointer(customBitmap, x, y);
+            byte* currentPixelPtr = ImageHelper.SetPixelPointer(customBitmap, x, y);
 
-            for (int i = 0; i < bytesPerPixel; i++)
+            for (int i = 0; i < customBitmap.BytesPerPixel; i++)
             {
                 resultPixelPtr[i] = (byte)(255 - currentPixelPtr[i]);
             }

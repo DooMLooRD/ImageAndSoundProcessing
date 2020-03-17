@@ -13,13 +13,13 @@ namespace ImageProcessing.Core.BasicFilters
             _windowSize = windowSize;
         }
 
-        public unsafe void ProcessPixel(byte* firstPixelPtr, int x, int y, int width, int bytesPerPixel, byte* copy = null)
+        public unsafe void ProcessPixel(CustomBitmapData customBitmap, int x, int y)
         {
-            byte* resultPixelPtr = ImageHelper.SetResultPixelPointer(firstPixelPtr, x, y, width, copy);
+            byte* resultPixelPtr = ImageHelper.SetResultPixelPointer(customBitmap, x, y);
 
-            int[][] window = ImageHelper.GetWindow(firstPixelPtr, x, y, width, bytesPerPixel, _windowSize);
+            int[][] window = ImageHelper.GetWindow(customBitmap, x, y, _windowSize);
 
-            for (int i = 0; i < bytesPerPixel; i++)
+            for (int i = 0; i < customBitmap.BytesPerPixel; i++)
             {
                 double result = window[i].OrderBy(c => c).ElementAt(_windowSize / 2);
                 resultPixelPtr[i] = (byte)ImageHelper.FixOverflow(result);
