@@ -1,5 +1,6 @@
 ﻿using ImageProcessing.Core.BasicFilters;
 using ImageProcessing.Core.BasicImageOperations;
+using ImageProcessing.Core.Constants;
 using ImageProcessing.Core.Interfaces;
 using ImageProcessing.Core.LinearFilters;
 using ImageProcessing.Core.NonLinearFilters;
@@ -54,7 +55,7 @@ namespace ImageProcessing.View.ViewModel
             EnlargeResultImage = new RelayCommand(() => ShowImageInFullWindow(ResultImage));
             SetMaskTabCommand = new RelayCommand(SetMaskTab);
             Operations = new[] {
-                "Greyscale",
+                Algorithms.Greyscale,
                 "Negative",
                 "Brightness (**)",
                 "Contrast (***)",
