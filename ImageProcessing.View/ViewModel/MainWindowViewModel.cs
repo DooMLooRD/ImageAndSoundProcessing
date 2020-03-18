@@ -28,7 +28,18 @@ namespace ImageProcessing.View.ViewModel
         public ImageSource ResultImage { get; set; }
 
         public IEnumerable<string> Operations { get; set; }
-        public string SelectedOperation { get; set; }
+
+        private string _selectedOperation;
+
+        public string SelectedOperation
+        {
+            get => _selectedOperation;
+            set
+            {
+                _selectedOperation = value;
+                SetVisibility(value);
+            }
+        }
 
         public ICommand Open { get; set; }
         public ICommand ApplyOperationCommand { get; set; }
@@ -45,6 +56,16 @@ namespace ImageProcessing.View.ViewModel
         public ICommand SetMaskTabCommand { get; set; }
         public DataView Mask { get; set; }
 
+        public Visibility WindowSizeVisible { get; set; } = new Visibility();
+        public Visibility BrightnessFactorVisible { get; set; } = new Visibility();
+        public Visibility ContrastFactorVisible { get; set; } = new Visibility();
+        public Visibility MaskVisible { get; set; } = new Visibility();
+        public Visibility UolisNormalizationVisible { get; set; } = new Visibility();
+
+        public Visibility[] VisibilityProps;
+
+        private const string SobelOperator = "Sobel Operator";
+
         public MainWindowViewModel()
         {
             MaskSize = 3;
@@ -56,15 +77,48 @@ namespace ImageProcessing.View.ViewModel
             SetMaskTabCommand = new RelayCommand(SetMaskTab);
             Operations = new[] {
                 Algorithms.Greyscale,
-                "Negative",
-                "Brightness (**)",
-                "Contrast (***)",
-                "Average Filter (*)",
-                "Linear Filter",
-                "Median Filter (*)",
-                "Sobel Operator",
-                "Uolis Operator (****)" };
-            SelectedOperation = "Greyscale";
+                Algorithms.Negative,
+                Algorithms.Brightness,
+                Algorithms.Contrast,
+                Algorithms.AverageFilter,
+                Algorithms.LinearFilter,
+                Algorithms.MedianFilter,
+                Algorithms.SobelOperator,
+                Algorithms.UolisOperator };
+            SelectedOperation = Algorithms.Greyscale;
+            VisibilityProps = new[] { WindowSizeVisible, BrightnessFactorVisible, ContrastFactorVisible, MaskVisible, UolisNormalizationVisible };
+        }
+
+        public void SetVisibility(string operation)
+        {
+            if (VisibilityProps == null)
+            {
+                return;
+            }
+            foreach (var visibilityProp in VisibilityProps)
+            {
+                visibilityProp.Visible = false;
+            }
+
+            switch (operation)
+            {
+                case Algorithms.MedianFilter:
+                case Algorithms.AverageFilter:
+                    WindowSizeVisible.Visible = true;
+                    break;
+                case Algorithms.Brightness:
+                    BrightnessFactorVisible.Visible = true;
+                    break;
+                case Algorithms.Contrast:
+                    ContrastFactorVisible.Visible = true;
+                    break;
+                case Algorithms.LinearFilter:
+                    MaskVisible.Visible = true;
+                    break;
+                case Algorithms.UolisOperator:
+                    UolisNormalizationVisible.Visible = true;
+                    break;
+            }
         }
 
         public void SetMaskTab()

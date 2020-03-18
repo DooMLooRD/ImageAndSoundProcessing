@@ -1,25 +1,34 @@
-﻿<Window x:Class="ImageProcessing.View.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ImageProcessing.View"
-        mc:Ignorable="d"
-         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-     TextElement.FontWeight="Regular"
-     TextElement.FontSize="13"
-     TextOptions.TextFormattingMode="Ideal"
-     TextOptions.TextRenderingMode="Auto"
-     Background="{DynamicResource MaterialDesignPaper}"
-     FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="MainWindow" Height="700" Width="1300">
+﻿<Window
+    x:Class="ImageProcessing.View.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:ImageProcessing.View"
+    mc:Ignorable="d"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextElement.FontWeight="Regular"
+    TextElement.FontSize="13"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    Background="{DynamicResource MaterialDesignPaper}"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    Title="MainWindow"
+    Height="800"
+    Width="1300">
     <Window.Resources>
-        <Style TargetType="{x:Type Button}" x:Key="ImageButtonStyle">
-            <Setter Property="Template">
+        <BooleanToVisibilityConverter
+            x:Key="BoolToVisConverter" />
+        <Style
+            TargetType="{x:Type Button}"
+            x:Key="ImageButtonStyle">
+            <Setter
+                Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <ContentPresenter/>
+                    <ControlTemplate
+                        TargetType="{x:Type Button}">
+                        <ContentPresenter />
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -28,12 +37,16 @@
 
     <StackPanel>
 
-        <Menu 
+        <Menu
             IsMainMenu="True">
-            <MenuItem Header="_File">
-                <MenuItem Header="_Open" Command="{Binding Open}">
+            <MenuItem
+                Header="_File">
+                <MenuItem
+                    Header="_Open"
+                    Command="{Binding Open}">
                     <MenuItem.Icon>
-                        <materialDesign:PackIcon Kind="OpenInApp"></materialDesign:PackIcon>
+                        <materialDesign:PackIcon
+                            Kind="OpenInApp"></materialDesign:PackIcon>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
@@ -41,95 +54,121 @@
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition
+                    Width="*" />
+                <ColumnDefinition
+                    Width="2*" />
+                <ColumnDefinition
+                    Width="2*" />
             </Grid.ColumnDefinitions>
 
             <!-- Image processing configuration START -->
-            <StackPanel Grid.Column="0">
-                <ComboBox 
-                Margin="6" 
-                ItemsSource="{Binding Operations}" 
-                SelectedItem="{Binding SelectedOperation}"/>
-                <TextBlock 
-                Margin="6" 
-                Text="Window Size (*)"/>
-                <TextBox 
-                Margin="6" 
-                Text="{Binding WindowSize}"/>
-                <TextBlock 
-                Margin="6" 
-                Text="Brightness Factor (**)"/>
-                <TextBox 
-                Margin="6" 
-                Text="{Binding BrightnessFactor}"/>
-                <TextBlock 
-                Margin="6" 
-                Text="Contrast Factor (***)"/>
-                <TextBox 
-                Margin="6" 
-                Text="{Binding ContrastFactor}"/>
-                <TextBlock 
-                Margin="6" 
-                Text="Uolis Normalization (****)"/>
-                <TextBox 
-                Margin="6" 
-                Text="{Binding UolisFactor}"/>
-                <CheckBox 
-                Margin="6" 
-                Content="Convert Result to Greyscale" 
-                IsChecked="{Binding ConvertResultToGreyscale}"/>
-                <Button 
-                Margin="6" 
-                Content="Apply" 
-                Command="{Binding ApplyOperationCommand}"/>
+            <StackPanel
+                Grid.Column="0">
+                <ComboBox
+                    Margin="6"
+                    ItemsSource="{Binding Operations}"
+                    SelectedItem="{Binding SelectedOperation}" />
+                <TextBlock
+                    Margin="6"
+                    Text="Window Size"
+                    Visibility="{Binding Path=WindowSizeVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
+                <TextBox
+                    Margin="6"
+                    Text="{Binding WindowSize}"
+                    Visibility="{Binding Path=WindowSizeVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
+                <TextBlock
+                    Margin="6"
+                    Text="Brightness Factor"
+                    Visibility="{Binding Path=BrightnessFactorVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
+                <TextBox
+                    Margin="6"
+                    Text="{Binding BrightnessFactor}"
+                    Visibility="{Binding Path=BrightnessFactorVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
+                <TextBlock
+                    Margin="6"
+                    Text="Contrast Factor"
+                    Visibility="{Binding Path=ContrastFactorVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
+                <TextBox
+                    Margin="6"
+                    Text="{Binding ContrastFactor}"
+                    Visibility="{Binding Path=ContrastFactorVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
+                <TextBlock
+                    Margin="6"
+                    Text="Uolis Normalization"
+                    Visibility="{Binding Path=UolisNormalizationVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
+                <TextBox
+                    Margin="6"
+                    Text="{Binding UolisFactor}"
+                    Visibility="{Binding Path=UolisNormalizationVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
+                <CheckBox
+                    Margin="6"
+                    Content="Convert Result to Greyscale"
+                    IsChecked="{Binding ConvertResultToGreyscale}" />
+                <Button
+                    Margin="6"
+                    Content="Apply"
+                    Command="{Binding ApplyOperationCommand}" />
 
-                <TextBlock 
-                Margin="6" 
-                Text="Mask size"/>
-                <TextBox 
-                Margin="6" 
-                Text="{Binding MaskSize}"/>
-                <Button 
-                Margin="6" 
-                Content="Create Mask Table" 
-                Command="{Binding SetMaskTabCommand}"/>
-                <DataGrid 
-                CanUserReorderColumns="False"
-                CanUserResizeColumns="False"
-                CanUserResizeRows="False" 
-                CanUserSortColumns="False"
-                CanUserDeleteRows="False"
-                CanUserAddRows="False" 
-                ColumnWidth="*"
-                Margin="6" 
-                ItemsSource="{Binding Mask}"/>
+                <TextBlock
+                    Margin="6"
+                    Text="Mask size"
+                    Visibility="{Binding Path=MaskVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
+                <TextBox
+                    Margin="6"
+                    Text="{Binding MaskSize}"
+                    Visibility="{Binding Path=MaskVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
+                <Button
+                    Margin="6"
+                    Content="Create Mask Table"
+                    Command="{Binding SetMaskTabCommand}"
+                    Visibility="{Binding Path=MaskVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
+                <DataGrid
+                    CanUserReorderColumns="False"
+                    CanUserResizeColumns="False"
+                    CanUserResizeRows="False"
+                    CanUserSortColumns="False"
+                    CanUserDeleteRows="False"
+                    CanUserAddRows="False"
+                    ColumnWidth="*"
+                    Margin="6"
+                    ItemsSource="{Binding Mask}"
+                    Visibility="{Binding Path=MaskVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
             </StackPanel>
             <!-- Image processing configuration END -->
 
             <!-- Original Image START -->
-            <StackPanel Grid.Column="1">
-                <TextBlock 
-                Margin="6" 
-                Text="Original Image"/>
-                <Button ToolTip="Click to open the image in new window" Style="{StaticResource ImageButtonStyle}" Command="{Binding EnlargeOriginalImage}" >
-                    <Image 
-                    Margin="6" 
-                    Source="{Binding OriginalImage}" Cursor="Hand" />
+            <StackPanel
+                Grid.Column="1">
+                <TextBlock
+                    Margin="6"
+                    Text="Original Image" />
+                <Button
+                    ToolTip="Click to open the image in new window"
+                    Style="{StaticResource ImageButtonStyle}"
+                    Command="{Binding EnlargeOriginalImage}">
+                    <Image
+                        Margin="6"
+                        Source="{Binding OriginalImage}"
+                        Cursor="Hand" />
                 </Button>
             </StackPanel>
             <!-- Original Image END -->
 
             <!-- Result Image START -->
-            <StackPanel Grid.Column="2">
-                <TextBlock 
-                Margin="6" 
-                Text="Processed Image"/>
-                <Button ToolTip="Click to open the image in new window" Style="{StaticResource ImageButtonStyle}" Command="{Binding EnlargeResultImage}" >
-                    <Image  
-                Margin="6" 
-                Source="{Binding ResultImage}" Cursor="Hand"/>
+            <StackPanel
+                Grid.Column="2">
+                <TextBlock
+                    Margin="6"
+                    Text="Processed Image" />
+                <Button
+                    ToolTip="Click to open the image in new window"
+                    Style="{StaticResource ImageButtonStyle}"
+                    Command="{Binding EnlargeResultImage}">
+                    <Image
+                        Margin="6"
+                        Source="{Binding ResultImage}"
+                        Cursor="Hand" />
                 </Button>
             </StackPanel>
             <!-- Result Image END -->
