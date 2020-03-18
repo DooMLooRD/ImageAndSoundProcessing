@@ -2,14 +2,14 @@
 {
     public static class Algorithms
     {
-        public static readonly string Greyscale = "Greyscale";
-        public static readonly string Negative = "Negative";
-        public static readonly string Brightness = "Brightness";
-        public static readonly string Contrast = "Contrast";
-        public static readonly string AverageFilter = "Average Filter";
-        public static readonly string LinearFilter = "Linear Filter";
-        public static readonly string MedianFilter = "Median Filter";
-        public static readonly string SobelOperator = "Sobel Operator";
-        public static readonly string UolisOperator = "Uolis Operator";
+        public const string Greyscale = "Greyscale";
+        public const string Negative = "Negative";
+        public const string Brightness = "Brightness";
+        public const string Contrast = "Contrast";
+        public const string AverageFilter = "Average Filter";
+        public const string LinearFilter = "Linear Filter";
+        public const string MedianFilter = "Median Filter";
+        public const string SobelOperator = "Sobel Operator";
+        public const string UolisOperator = "Uolis Operator";
     }
 }
