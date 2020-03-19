@@ -186,35 +186,35 @@ namespace ImageProcessing.View.ViewModel
             var offset = 0;
             switch (SelectedOperation)
             {
-                case "Greyscale":
+                case Algorithms.Greyscale:
                     operation = new GreyscaleOperation();
                     break;
-                case "Negative":
+                case Algorithms.Negative:
                     operation = new NegativeOperation();
                     break;
-                case "Brightness (**)":
+                case Algorithms.Brightness:
                     operation = new BrightnessOperation(BrightnessFactor);
                     break;
-                case "Contrast (***)":
+                case Algorithms.Contrast:
                     operation = new ContrastOperation(ContrastFactor);
                     break;
-                case "Average Filter (*)":
+                case Algorithms.AverageFilter:
                     operation = new AverageFilter(WindowSize);
                     offset = WindowSize / 2;
                     break;
-                case "Linear Filter":
+                case Algorithms.LinearFilter:
                     operation = new LinearFilter(ReadMask(), MaskSize);
                     offset = MaskSize / 2;
                     break;
-                case "Median Filter (*)":
+                case Algorithms.MedianFilter:
                     operation = new MedianFilter(WindowSize);
                     offset = WindowSize / 2;
                     break;
-                case "Sobel Operator":
+                case Algorithms.SobelOperator:
                     operation = new SobelOperator();
                     offset = 1;
                     break;
-                case "Uolis Operator (****)":
+                case Algorithms.UolisOperator:
                     operation = new UolisOperator(UolisFactor);
                     offset = 1;
                     break;

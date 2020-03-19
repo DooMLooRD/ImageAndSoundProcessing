@@ -15,6 +15,7 @@
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="{DynamicResource MaterialDesignFont}"
     Title="MainWindow"
+    WindowState="Maximized"
     Height="800"
     Width="1300">
     <Window.Resources>
@@ -35,9 +36,15 @@
         </Style>
     </Window.Resources>
 
-    <StackPanel>
-
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="Auto" />
+            <RowDefinition
+                Height="*" />
+        </Grid.RowDefinitions>
         <Menu
+            Grid.Row="0"
             IsMainMenu="True">
             <MenuItem
                 Header="_File">
@@ -52,7 +59,8 @@
             </MenuItem>
         </Menu>
 
-        <Grid>
+        <Grid
+            Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition
                     Width="*" />
@@ -63,116 +71,196 @@
             </Grid.ColumnDefinitions>
 
             <!-- Image processing configuration START -->
-            <StackPanel
-                Grid.Column="0">
-                <ComboBox
-                    Margin="6"
-                    ItemsSource="{Binding Operations}"
-                    SelectedItem="{Binding SelectedOperation}" />
-                <TextBlock
-                    Margin="6"
-                    Text="Window Size"
-                    Visibility="{Binding Path=WindowSizeVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
-                <TextBox
-                    Margin="6"
-                    Text="{Binding WindowSize}"
-                    Visibility="{Binding Path=WindowSizeVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
-                <TextBlock
-                    Margin="6"
-                    Text="Brightness Factor"
-                    Visibility="{Binding Path=BrightnessFactorVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
-                <TextBox
-                    Margin="6"
-                    Text="{Binding BrightnessFactor}"
-                    Visibility="{Binding Path=BrightnessFactorVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
-                <TextBlock
-                    Margin="6"
-                    Text="Contrast Factor"
-                    Visibility="{Binding Path=ContrastFactorVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
-                <TextBox
-                    Margin="6"
-                    Text="{Binding ContrastFactor}"
-                    Visibility="{Binding Path=ContrastFactorVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
-                <TextBlock
-                    Margin="6"
-                    Text="Uolis Normalization"
-                    Visibility="{Binding Path=UolisNormalizationVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
-                <TextBox
-                    Margin="6"
-                    Text="{Binding UolisFactor}"
-                    Visibility="{Binding Path=UolisNormalizationVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
-                <CheckBox
-                    Margin="6"
-                    Content="Convert Result to Greyscale"
-                    IsChecked="{Binding ConvertResultToGreyscale}" />
-                <Button
-                    Margin="6"
-                    Content="Apply"
-                    Command="{Binding ApplyOperationCommand}" />
+            <GroupBox
+                Header="Operations"
+                BorderThickness="0"
+                materialDesign:ShadowAssist.ShadowDepth="Depth5"
+                Padding="0"
+                Margin="16">
+                <GroupBox.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel
+                            Margin="16 8"
+                            Orientation="Horizontal">
+                            <materialDesign:PackIcon
+                                Kind="Build"
+                                Height="32"
+                                Width="32"
+                                VerticalAlignment="Center" />
+                            <TextBlock
+                                Margin="8,0,0,0"
+                                VerticalAlignment="Center"
+                                Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                Text="{Binding}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </GroupBox.HeaderTemplate>
+                <ScrollViewer
+                    VerticalScrollBarVisibility="Auto"
+                    HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel
+                        Margin="10">
+                        <ComboBox
+                            materialDesign:HintAssist.FloatingScale="1.2"
+                            materialDesign:HintAssist.FloatingOffset="0, -20"
+                            materialDesign:HintAssist.Hint="Operation"
+                            Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                            Margin="0 15"
+                            ItemsSource="{Binding Operations}"
+                            SelectedItem="{Binding SelectedOperation}" />
+                        <TextBox
+                            materialDesign:HintAssist.FloatingScale="1.2"
+                            materialDesign:HintAssist.FloatingOffset="0, -20"
+                            materialDesign:HintAssist.Hint="Window Size"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            Margin="0 15"
+                            Text="{Binding WindowSize}"
+                            Visibility="{Binding Path=WindowSizeVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
+                        <TextBox
+                            materialDesign:HintAssist.FloatingScale="1.2"
+                            materialDesign:HintAssist.FloatingOffset="0, -20"
+                            materialDesign:HintAssist.Hint="Brightness Factor"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            Margin="0 15"
+                            Text="{Binding BrightnessFactor}"
+                            Visibility="{Binding Path=BrightnessFactorVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
+                        <TextBox
+                            materialDesign:HintAssist.FloatingScale="1.2"
+                            materialDesign:HintAssist.FloatingOffset="0, -20"
+                            materialDesign:HintAssist.Hint="Contrast Factor"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            Margin="0 15"
+                            Text="{Binding ContrastFactor}"
+                            Visibility="{Binding Path=ContrastFactorVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
+                        <TextBox
+                            materialDesign:HintAssist.FloatingScale="1.2"
+                            materialDesign:HintAssist.FloatingOffset="0, -20"
+                            materialDesign:HintAssist.Hint="Uolis Normalization"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            Margin="0 15"
+                            Text="{Binding UolisFactor}"
+                            Visibility="{Binding Path=UolisNormalizationVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
+                        <TextBox
+                            materialDesign:HintAssist.FloatingScale="1.2"
+                            materialDesign:HintAssist.FloatingOffset="0, -20"
+                            materialDesign:HintAssist.Hint="Mask Size"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            Margin="0 15"
+                            Text="{Binding MaskSize}"
+                            Visibility="{Binding Path=MaskVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
+                        <Button
+                            Margin="0 15"
+                            Content="Create Mask Table"
+                            Command="{Binding SetMaskTabCommand}"
+                            Visibility="{Binding Path=MaskVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
+                        <DataGrid
+                            CanUserReorderColumns="False"
+                            CanUserResizeColumns="False"
+                            CanUserResizeRows="False"
+                            CanUserSortColumns="False"
+                            CanUserDeleteRows="False"
+                            CanUserAddRows="False"
+                            ColumnWidth="*"
+                            MinColumnWidth="45"
+                            Margin="0 15"
+                            ItemsSource="{Binding Mask}"
+                            Visibility="{Binding Path=MaskVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
 
-                <TextBlock
-                    Margin="6"
-                    Text="Mask size"
-                    Visibility="{Binding Path=MaskVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
-                <TextBox
-                    Margin="6"
-                    Text="{Binding MaskSize}"
-                    Visibility="{Binding Path=MaskVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
-                <Button
-                    Margin="6"
-                    Content="Create Mask Table"
-                    Command="{Binding SetMaskTabCommand}"
-                    Visibility="{Binding Path=MaskVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
-                <DataGrid
-                    CanUserReorderColumns="False"
-                    CanUserResizeColumns="False"
-                    CanUserResizeRows="False"
-                    CanUserSortColumns="False"
-                    CanUserDeleteRows="False"
-                    CanUserAddRows="False"
-                    ColumnWidth="*"
-                    Margin="6"
-                    ItemsSource="{Binding Mask}"
-                    Visibility="{Binding Path=MaskVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
-            </StackPanel>
+
+                        <CheckBox
+                            Margin="0 15"
+                            Content="Convert Result to Greyscale"
+                            IsChecked="{Binding ConvertResultToGreyscale}" />
+                        <Button
+                            Margin="0 5"
+                            Content="Apply"
+                            Command="{Binding ApplyOperationCommand}" />
+                    </StackPanel>
+                </ScrollViewer>
+
+            </GroupBox>
             <!-- Image processing configuration END -->
 
             <!-- Original Image START -->
-            <StackPanel
-                Grid.Column="1">
-                <TextBlock
-                    Margin="6"
-                    Text="Original Image" />
+            <GroupBox
+                Grid.Column="1"
+                Header="Original Image"
+                BorderThickness="0"
+                Style="{DynamicResource MaterialDesignGroupBox}"
+                materialDesign:ShadowAssist.ShadowDepth="Depth5"
+                VerticalAlignment="Top"
+                Padding="0"
+                Margin="16">
+                <GroupBox.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel
+                            Margin="16 8"
+                            Orientation="Horizontal">
+                            <materialDesign:PackIcon
+                                Kind="ImageArea"
+                                Height="32"
+                                Width="32"
+                                VerticalAlignment="Center" />
+                            <TextBlock
+                                Margin="8,0,0,0"
+                                VerticalAlignment="Center"
+                                Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                Text="{Binding}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </GroupBox.HeaderTemplate>
                 <Button
+                    Margin="0 30 0 0"
                     ToolTip="Click to open the image in new window"
                     Style="{StaticResource ImageButtonStyle}"
                     Command="{Binding EnlargeOriginalImage}">
                     <Image
-                        Margin="6"
                         Source="{Binding OriginalImage}"
                         Cursor="Hand" />
                 </Button>
-            </StackPanel>
+            </GroupBox>
             <!-- Original Image END -->
 
             <!-- Result Image START -->
-            <StackPanel
-                Grid.Column="2">
-                <TextBlock
-                    Margin="6"
-                    Text="Processed Image" />
+            <GroupBox
+                Grid.Column="2"
+                Header="Processed Image"
+                VerticalAlignment="Top"
+                BorderThickness="0"
+                materialDesign:ShadowAssist.ShadowDepth="Depth5"
+                Style="{DynamicResource MaterialDesignGroupBox}"
+                Padding="0"
+                Margin="16">
+                <GroupBox.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel
+                            Margin="16 8"
+                            Orientation="Horizontal">
+                            <materialDesign:PackIcon
+                                Kind="ImageArea"
+                                Height="32"
+                                Width="32"
+                                VerticalAlignment="Center" />
+                            <TextBlock
+                                Margin="8,0,0,0"
+                                VerticalAlignment="Center"
+                                Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                Text="{Binding}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </GroupBox.HeaderTemplate>
                 <Button
+                    Margin="0 30 0 0"
                     ToolTip="Click to open the image in new window"
                     Style="{StaticResource ImageButtonStyle}"
                     Command="{Binding EnlargeResultImage}">
                     <Image
-                        Margin="6"
                         Source="{Binding ResultImage}"
                         Cursor="Hand" />
                 </Button>
-            </StackPanel>
+            </GroupBox>
             <!-- Result Image END -->
         </Grid>
-    </StackPanel>
+    </Grid>
 
 </Window>
