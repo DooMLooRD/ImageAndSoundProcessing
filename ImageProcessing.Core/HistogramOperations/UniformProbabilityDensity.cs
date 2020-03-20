@@ -10,8 +10,8 @@ namespace ImageProcessing.Core.HistogramOperations
         private readonly int[] _gMax;
 
 
-        public UniformProbabilityDensity(long[][] histogramValues, int gMin, int gMax)
-            : this(histogramValues, gMin, gMax, gMin, gMax, gMin, gMax)
+        public UniformProbabilityDensity(long[][] histogramValues, int aMin, int aMax)
+            : this(histogramValues, aMin, aMax, aMin, aMax, aMin, aMax)
         {
         }
 
@@ -41,7 +41,7 @@ namespace ImageProcessing.Core.HistogramOperations
             double sum = 0;
             for (int m = 0; m <= f; m++)
             {
-                sum += _histogramValues[color][m];
+                sum += _histogramValues[m][color];
             }
             return sum;
         }

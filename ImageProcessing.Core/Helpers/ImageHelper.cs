@@ -16,6 +16,13 @@ namespace ImageProcessing.Core.Helpers
             return sum;
         }
 
+        public static bool IsGreyscale(PixelFormat pixelFormat)
+        {
+            return pixelFormat == PixelFormat.Format1bppIndexed ||
+                   pixelFormat == PixelFormat.Format8bppIndexed ||
+                   pixelFormat == PixelFormat.Format16bppGrayScale;
+        }
+
         public static double FixOverflow(double value)
         {
             if (value > 255)
@@ -34,7 +41,7 @@ namespace ImageProcessing.Core.Helpers
         {
             byte*[] a = new byte*[8];
 
-            a[0] = bitmapData.FirstPixelPtr + (y - 1) * bitmapData.WidthInBytes+ (x - bitmapData.BytesPerPixel);
+            a[0] = bitmapData.FirstPixelPtr + (y - 1) * bitmapData.WidthInBytes + (x - bitmapData.BytesPerPixel);
             a[1] = bitmapData.FirstPixelPtr + (y - 1) * bitmapData.WidthInBytes + x;
             a[2] = bitmapData.FirstPixelPtr + (y - 1) * bitmapData.WidthInBytes + (x + bitmapData.BytesPerPixel);
             a[3] = bitmapData.FirstPixelPtr + y * bitmapData.WidthInBytes + (x + bitmapData.BytesPerPixel);

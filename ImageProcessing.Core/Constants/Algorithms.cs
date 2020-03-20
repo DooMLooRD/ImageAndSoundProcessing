@@ -11,5 +11,6 @@
         public const string MedianFilter = "Median Filter";
         public const string SobelOperator = "Sobel Operator";
         public const string UolisOperator = "Uolis Operator";
+        public const string UniformProbabilityDensity = "Uniform Probability Density";
     }
 }

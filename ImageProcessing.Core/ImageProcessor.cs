@@ -34,7 +34,7 @@ namespace ImageProcessing
             return convertedResult;
         }
 
-        public unsafe Histogram CreateHistogram(Bitmap bitmap)
+        public static unsafe Histogram CreateHistogram(Bitmap bitmap)
         {
             long[][] result = new long[256][];
 

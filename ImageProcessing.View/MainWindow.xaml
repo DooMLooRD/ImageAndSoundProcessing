@@ -19,8 +19,6 @@
     Height="800"
     Width="1300">
     <Window.Resources>
-        <BooleanToVisibilityConverter
-            x:Key="BoolToVisConverter" />
         <Style
             TargetType="{x:Type Button}"
             x:Key="ImageButtonStyle">
@@ -108,6 +106,8 @@
                             Margin="0 15"
                             ItemsSource="{Binding Operations}"
                             SelectedItem="{Binding SelectedOperation}" />
+
+                        <!-- Simple Filter Factors START-->
                         <TextBox
                             materialDesign:HintAssist.FloatingScale="1.2"
                             materialDesign:HintAssist.FloatingOffset="0, -20"
@@ -116,6 +116,10 @@
                             Margin="0 15"
                             Text="{Binding WindowSize}"
                             Visibility="{Binding Path=WindowSizeVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
+                        <!-- Simple Filter Factors END-->
+
+
+                        <!-- Brightness Factors START-->
                         <TextBox
                             materialDesign:HintAssist.FloatingScale="1.2"
                             materialDesign:HintAssist.FloatingOffset="0, -20"
@@ -124,6 +128,10 @@
                             Margin="0 15"
                             Text="{Binding BrightnessFactor}"
                             Visibility="{Binding Path=BrightnessFactorVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
+                        <!-- Brightness Factors END-->
+
+
+                        <!-- Contrast Factors START-->
                         <TextBox
                             materialDesign:HintAssist.FloatingScale="1.2"
                             materialDesign:HintAssist.FloatingOffset="0, -20"
@@ -132,6 +140,10 @@
                             Margin="0 15"
                             Text="{Binding ContrastFactor}"
                             Visibility="{Binding Path=ContrastFactorVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
+                        <!-- Contrast Factors END-->
+
+
+                        <!-- Uolis Operator Factors START-->
                         <TextBox
                             materialDesign:HintAssist.FloatingScale="1.2"
                             materialDesign:HintAssist.FloatingOffset="0, -20"
@@ -140,6 +152,10 @@
                             Margin="0 15"
                             Text="{Binding UolisFactor}"
                             Visibility="{Binding Path=UolisNormalizationVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
+                        <!-- Uolis Operator Factors END-->
+
+
+                        <!-- Linear Filter Factors START-->
                         <TextBox
                             materialDesign:HintAssist.FloatingScale="1.2"
                             materialDesign:HintAssist.FloatingOffset="0, -20"
@@ -165,7 +181,194 @@
                             Margin="0 15"
                             ItemsSource="{Binding Mask}"
                             Visibility="{Binding Path=MaskVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
+                        <!-- Linear Filter Factors END-->
 
+
+                        <!-- Uniform Probability Density Factors START-->
+                        <StackPanel
+                            Margin="0 15"
+                            Visibility="{Binding Path=HistogramFactorsVisible.Visible, Converter={StaticResource BoolToVisConverter} }">
+
+                            <!-- All Canals START-->
+                            <GroupBox
+                                IsEnabled="{Binding UseSeparateCanals, Converter={StaticResource InverseBoolConverter}}">
+                                <GroupBox.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                Text="All canals (24 bit images)" />
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                Text="Grey canal (1, 8, 16 bit images)" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GroupBox.HeaderTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition
+                                            Width="*" />
+                                        <ColumnDefinition
+                                            Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox
+                                        Grid.Column="0"
+                                        materialDesign:HintAssist.FloatingScale="1.2"
+                                        materialDesign:HintAssist.FloatingOffset="0, -20"
+                                        materialDesign:HintAssist.Hint="Min Value"
+                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                        Margin="10 0"
+                                        Text="{Binding A_Min}" />
+                                    <TextBox
+                                        Grid.Column="1"
+                                        materialDesign:HintAssist.FloatingScale="1.2"
+                                        materialDesign:HintAssist.FloatingOffset="0, -20"
+                                        materialDesign:HintAssist.Hint="Max Value"
+                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                        Margin="10 0"
+                                        Text="{Binding A_Max}" />
+                                </Grid>
+                            </GroupBox>
+                            <!-- All Canals END-->
+
+
+                            <!-- Separate Canals START-->
+                            <StackPanel
+                                Margin="0 15"
+                                Visibility="{Binding Path=HistogramSeparateFactorsVisible.Visible, Converter={StaticResource BoolToVisConverter} }">
+                                <CheckBox
+                                    Margin="0 15"
+                                    Content="Use separate canals"
+                                    IsChecked="{Binding UseSeparateCanals}" />
+
+                                <!-- Red Canal START-->
+                                <GroupBox
+                                    IsEnabled="{Binding UseSeparateCanals}">
+                                    <GroupBox.HeaderTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock
+                                                    VerticalAlignment="Center"
+                                                    Text="Red canal (only 24 bit images)" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GroupBox.HeaderTemplate>
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition
+                                                Width="*" />
+                                            <ColumnDefinition
+                                                Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox
+                                            Grid.Column="0"
+                                            materialDesign:HintAssist.FloatingScale="1.2"
+                                            materialDesign:HintAssist.FloatingOffset="0, -20"
+                                            materialDesign:HintAssist.Hint="Min Value"
+                                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                            Margin="10 0"
+                                            Text="{Binding R_Min}" />
+                                        <TextBox
+                                            Grid.Column="1"
+                                            materialDesign:HintAssist.FloatingScale="1.2"
+                                            materialDesign:HintAssist.FloatingOffset="0, -20"
+                                            materialDesign:HintAssist.Hint="Max Value"
+                                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                            Margin="10 0"
+                                            Text="{Binding R_Max}" />
+                                    </Grid>
+                                </GroupBox>
+                                <!-- Red Canal END-->
+
+
+                                <!-- Green Canal START-->
+                                <GroupBox
+                                    IsEnabled="{Binding UseSeparateCanals}">
+                                    <GroupBox.HeaderTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock
+                                                    VerticalAlignment="Center"
+                                                    Text="Green canal (only 24 bit images)" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GroupBox.HeaderTemplate>
+                                    <Grid
+                                        Margin="0 15">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition
+                                                Width="*" />
+                                            <ColumnDefinition
+                                                Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox
+                                            Grid.Column="0"
+                                            materialDesign:HintAssist.FloatingScale="1.2"
+                                            materialDesign:HintAssist.FloatingOffset="0, -20"
+                                            materialDesign:HintAssist.Hint="Min Value"
+                                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                            Margin="10 0"
+                                            Text="{Binding G_Min}" />
+                                        <TextBox
+                                            Grid.Column="1"
+                                            materialDesign:HintAssist.FloatingScale="1.2"
+                                            materialDesign:HintAssist.FloatingOffset="0, -20"
+                                            materialDesign:HintAssist.Hint="Max Value"
+                                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                            Margin="10 0"
+                                            Text="{Binding G_Max}" />
+                                    </Grid>
+                                </GroupBox>
+                                <!-- Green Canal END-->
+
+
+                                <!-- Blue Canal START-->
+                                <GroupBox
+                                    IsEnabled="{Binding UseSeparateCanals}">
+                                    <GroupBox.HeaderTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock
+                                                    VerticalAlignment="Center"
+                                                    Text="Blue canal (only 24 bit images)" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GroupBox.HeaderTemplate>
+
+                                    <Grid
+                                        Margin="0 15">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition
+                                                Width="*" />
+                                            <ColumnDefinition
+                                                Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox
+                                            Grid.Column="0"
+                                            materialDesign:HintAssist.FloatingScale="1.2"
+                                            materialDesign:HintAssist.FloatingOffset="0, -20"
+                                            materialDesign:HintAssist.Hint="Min Value"
+                                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                            Margin="10 0"
+                                            Text="{Binding B_Min}" />
+                                        <TextBox
+                                            Grid.Column="1"
+                                            materialDesign:HintAssist.FloatingScale="1.2"
+                                            materialDesign:HintAssist.FloatingOffset="0, -20"
+                                            materialDesign:HintAssist.Hint="Max Value"
+                                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                            Margin="10 0"
+                                            Text="{Binding B_Max}" />
+                                    </Grid>
+                                </GroupBox>
+                                <!-- Blue Canal END-->
+
+                            </StackPanel>
+                            <!-- Separate Canals END-->
+
+                        </StackPanel>
+                        <!-- Uniform Probability Density Factors END-->
 
                         <CheckBox
                             Margin="0 15"
@@ -180,6 +383,7 @@
 
             </GroupBox>
             <!-- Image processing configuration END -->
+
 
             <!-- Original Image START -->
             <GroupBox
