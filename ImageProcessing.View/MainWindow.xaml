@@ -5,8 +5,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:ImageProcessing.View"
+    xmlns:usercontrols="clr-namespace:ImageProcessing.View.UserControls"
     mc:Ignorable="d"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:converters="clr-namespace:ImageProcessing.View.Converters"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     TextElement.FontWeight="Regular"
     TextElement.FontSize="13"
@@ -19,6 +21,8 @@
     Height="800"
     Width="1300">
     <Window.Resources>
+        <converters:ParametrizedBooleanToVisibilityConverter
+            x:Key="ParametrizedBooleanToVisibilityConverter" />
         <Style
             TargetType="{x:Type Button}"
             x:Key="ImageButtonStyle">
@@ -54,6 +58,21 @@
                             Kind="OpenInApp"></materialDesign:PackIcon>
                     </MenuItem.Icon>
                 </MenuItem>
+
+            </MenuItem>
+            <MenuItem
+                Header="_View">
+                <MenuItem
+                    Header="Show Histograms"
+                    IsCheckable="True"
+                    IsChecked="{Binding IsHistogramShown}"
+                    Command="{Binding ShowHistogram}">
+                    <MenuItem.Icon>
+                        <materialDesign:PackIcon
+                            Kind="OpenInApp"></materialDesign:PackIcon>
+                    </MenuItem.Icon>
+                </MenuItem>
+
             </MenuItem>
         </Menu>
 
@@ -418,15 +437,27 @@
                         </StackPanel>
                     </DataTemplate>
                 </GroupBox.HeaderTemplate>
-                <Button
-                    Margin="0 30 0 0"
-                    ToolTip="Click to open the image in new window"
-                    Style="{StaticResource ImageButtonStyle}"
-                    Command="{Binding EnlargeOriginalImage}">
-                    <Image
-                        Source="{Binding OriginalImage}"
-                        Cursor="Hand" />
-                </Button>
+                <Grid
+                    Margin="0 30 0 0">
+                    <Grid
+                        Visibility="{Binding Path=IsHistogramShown, Converter={StaticResource BoolToVisConverter} }">
+                        <usercontrols:Histograms
+                            DataContext="{Binding OriginalHistogramVm}" />
+                    </Grid>
+
+                    <Button
+                        Visibility="{Binding Path=IsHistogramShown, Converter={StaticResource ParametrizedBooleanToVisibilityConverter}, ConverterParameter=false }"
+                        ToolTip="Click to open the image in new window"
+                        Style="{StaticResource ImageButtonStyle}"
+                        Command="{Binding EnlargeOriginalImage}">
+                        <Image
+                            Source="{Binding OriginalImage}"
+                            Cursor="Hand" />
+                    </Button>
+
+
+                </Grid>
+
             </GroupBox>
             <!-- Original Image END -->
 
@@ -458,15 +489,23 @@
                         </StackPanel>
                     </DataTemplate>
                 </GroupBox.HeaderTemplate>
-                <Button
-                    Margin="0 30 0 0"
-                    ToolTip="Click to open the image in new window"
-                    Style="{StaticResource ImageButtonStyle}"
-                    Command="{Binding EnlargeResultImage}">
-                    <Image
-                        Source="{Binding ResultImage}"
-                        Cursor="Hand" />
-                </Button>
+                <Grid
+                    Margin="0 30 0 0">
+                    <Grid
+                        Visibility="{Binding Path=IsHistogramShown, Converter={StaticResource BoolToVisConverter} }">
+                        <usercontrols:Histograms
+                            DataContext="{Binding ResultHistogramVm}" />
+                    </Grid>
+                    <Button
+                        Visibility="{Binding Path=IsHistogramShown, Converter={StaticResource ParametrizedBooleanToVisibilityConverter}, ConverterParameter=false }"
+                        ToolTip="Click to open the image in new window"
+                        Style="{StaticResource ImageButtonStyle}"
+                        Command="{Binding EnlargeResultImage}">
+                        <Image
+                            Source="{Binding ResultImage}"
+                            Cursor="Hand" />
+                    </Button>
+                </Grid>
             </GroupBox>
             <!-- Result Image END -->
         </Grid>

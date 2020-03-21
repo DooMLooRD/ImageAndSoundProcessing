@@ -71,8 +71,31 @@ namespace ImageProcessing.View.ViewModel
         public ICommand SetMaskTabCommand { get; set; }
         public DataView Mask { get; set; }
 
-        public Histogram OriginalHistogram { get; set; }
-        public Histogram ResultHistogram { get; set; }
+        public Histogram OriginalHistogram
+        {
+            get => _originalHistogram;
+            set
+            {
+                _originalHistogram = value;
+                OriginalHistogramVm = new HistogramVM(value);
+            }
+        }
+
+        public Histogram ResultHistogram
+        {
+            get => _resultHistogram;
+            set
+            {
+                _resultHistogram = value;
+                ResultHistogramVm = new HistogramVM(value);
+            }
+        }
+
+        public bool IsHistogramShown { get; set; }
+        public ICommand ShowHistogram { get; set; }
+
+        public HistogramVM OriginalHistogramVm { get; set; }
+        public HistogramVM ResultHistogramVm { get; set; }
 
         public Visibility WindowSizeVisible { get; set; } = new Visibility();
         public Visibility BrightnessFactorVisible { get; set; } = new Visibility();
@@ -83,6 +106,8 @@ namespace ImageProcessing.View.ViewModel
         public Visibility HistogramSeparateFactorsVisible { get; set; } = new Visibility();
 
         public Visibility[] VisibilityProps;
+        private Histogram _resultHistogram;
+        private Histogram _originalHistogram;
 
         public MainWindowViewModel()
         {
@@ -97,6 +122,10 @@ namespace ImageProcessing.View.ViewModel
             EnlargeOriginalImage = new RelayCommand(() => ShowImageInFullWindow(OriginalImage));
             EnlargeResultImage = new RelayCommand(() => ShowImageInFullWindow(ResultImage));
             SetMaskTabCommand = new RelayCommand(SetMaskTab);
+            ShowHistogram = new RelayCommand(OnShowHistogram);
+
+            OriginalHistogramVm = new HistogramVM(OriginalHistogram);
+            ResultHistogramVm = new HistogramVM(ResultHistogram);
 
             Operations = new[] {
                 Algorithms.Greyscale,
@@ -121,6 +150,10 @@ namespace ImageProcessing.View.ViewModel
                 UolisNormalizationVisible,
                 HistogramFactorsVisible
             };
+        }
+
+        public void OnShowHistogram()
+        {
         }
 
         public void SetVisibility(string operation)
