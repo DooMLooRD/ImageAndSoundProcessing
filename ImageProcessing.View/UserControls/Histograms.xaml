@@ -33,6 +33,10 @@
         </Grid.RowDefinitions>
         <wpf:CartesianChart
             Grid.Row="0"
+            IsManipulationEnabled="False"
+            DataTooltip="{x:Null}"
+            Hoverable="False"
+            DisableAnimations="True"
             Series="{Binding Histogram1}"
             LegendLocation="None">
             <wpf:CartesianChart.AxisX>
@@ -48,6 +52,10 @@
 
         <wpf:CartesianChart
             Grid.Row="1"
+            IsManipulationEnabled="False"
+            DataTooltip="{x:Null}"
+            Hoverable="False"
+            DisableAnimations="True"
             Series="{Binding Histogram2}"
             LegendLocation="None">
             <wpf:CartesianChart.AxisX>
@@ -64,6 +72,10 @@
 
         <wpf:CartesianChart
             Grid.Row="2"
+            IsManipulationEnabled="False"
+            DataTooltip="{x:Null}"
+            Hoverable="False"
+            DisableAnimations="True"
             Series="{Binding Histogram3}"
             LegendLocation="None">
             <wpf:CartesianChart.AxisX>

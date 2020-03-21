@@ -416,7 +416,7 @@
                 BorderThickness="0"
                 Style="{DynamicResource MaterialDesignGroupBox}"
                 materialDesign:ShadowAssist.ShadowDepth="Depth5"
-                VerticalAlignment="Top"
+                VerticalAlignment="Stretch"
                 Padding="0"
                 Margin="16">
                 <GroupBox.HeaderTemplate>
@@ -465,7 +465,7 @@
             <GroupBox
                 Grid.Column="2"
                 Header="Processed Image"
-                VerticalAlignment="Top"
+                VerticalAlignment="Stretch"
                 BorderThickness="0"
                 materialDesign:ShadowAssist.ShadowDepth="Depth5"
                 Style="{DynamicResource MaterialDesignGroupBox}"
