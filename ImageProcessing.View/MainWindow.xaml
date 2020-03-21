@@ -416,7 +416,7 @@
                 BorderThickness="0"
                 Style="{DynamicResource MaterialDesignGroupBox}"
                 materialDesign:ShadowAssist.ShadowDepth="Depth5"
-                VerticalAlignment="Stretch"
+                VerticalAlignment="{Binding Path=IsHistogramShown, Converter={StaticResource BootToVerticalAlignmentConverter}}"
                 Padding="0"
                 Margin="16">
                 <GroupBox.HeaderTemplate>
@@ -465,12 +465,12 @@
             <GroupBox
                 Grid.Column="2"
                 Header="Processed Image"
-                VerticalAlignment="Stretch"
                 BorderThickness="0"
                 materialDesign:ShadowAssist.ShadowDepth="Depth5"
                 Style="{DynamicResource MaterialDesignGroupBox}"
                 Padding="0"
-                Margin="16">
+                Margin="16"
+                VerticalAlignment="{Binding Path=IsHistogramShown, Converter={StaticResource BootToVerticalAlignmentConverter}}">
                 <GroupBox.HeaderTemplate>
                     <DataTemplate>
                         <StackPanel

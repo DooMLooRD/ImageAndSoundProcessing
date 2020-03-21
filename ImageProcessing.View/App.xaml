@@ -12,6 +12,7 @@
                 x:Key="BoolToVisConverter" />
             <converters:InverseBoolConverter
                 x:Key="InverseBoolConverter" />
+            <converters:BootToVerticalAlignmentConverter x:Key="BootToVerticalAlignmentConverter" />
             <ResourceDictionary.MergedDictionaries>
                 <materialDesign:BundledTheme
                     BaseTheme="Dark"
