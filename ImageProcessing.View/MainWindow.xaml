@@ -189,18 +189,20 @@
                             Margin="0 15"
                             Visibility="{Binding Path=HistogramFactorsVisible.Visible, Converter={StaticResource BoolToVisConverter} }">
 
-                            <!-- All Canals START-->
+                            <!-- All Channels START-->
                             <GroupBox
                                 IsEnabled="{Binding UseSeparateCanals, Converter={StaticResource InverseBoolConverter}}">
                                 <GroupBox.HeaderTemplate>
                                     <DataTemplate>
                                         <StackPanel>
                                             <TextBlock
+                                                Margin="10 0 10 5"
                                                 VerticalAlignment="Center"
-                                                Text="All canals (24 bit images)" />
+                                                Text="All channels (24 bit images)" />
                                             <TextBlock
+                                                Margin="10 0"
                                                 VerticalAlignment="Center"
-                                                Text="Grey canal (1, 8, 16 bit images)" />
+                                                Text="Grey channel (1, 8, 16 bit images)" />
                                         </StackPanel>
                                     </DataTemplate>
                                 </GroupBox.HeaderTemplate>
@@ -229,10 +231,10 @@
                                         Text="{Binding A_Max}" />
                                 </Grid>
                             </GroupBox>
-                            <!-- All Canals END-->
+                            <!-- All Channels END-->
 
 
-                            <!-- Separate Canals START-->
+                            <!-- Separate Channels START-->
                             <StackPanel
                                 Margin="0 15"
                                 Visibility="{Binding Path=HistogramSeparateFactorsVisible.Visible, Converter={StaticResource BoolToVisConverter} }">
@@ -241,15 +243,16 @@
                                     Content="Use separate canals"
                                     IsChecked="{Binding UseSeparateCanals}" />
 
-                                <!-- Red Canal START-->
+                                <!-- Red Channel START-->
                                 <GroupBox
                                     IsEnabled="{Binding UseSeparateCanals}">
                                     <GroupBox.HeaderTemplate>
                                         <DataTemplate>
                                             <StackPanel>
                                                 <TextBlock
+                                                    Margin="10 0"
                                                     VerticalAlignment="Center"
-                                                    Text="Red canal (only 24 bit images)" />
+                                                    Text="Red channel (only 24 bit images)" />
                                             </StackPanel>
                                         </DataTemplate>
                                     </GroupBox.HeaderTemplate>
@@ -279,18 +282,19 @@
                                             Text="{Binding R_Max}" />
                                     </Grid>
                                 </GroupBox>
-                                <!-- Red Canal END-->
+                                <!-- Red Channel END-->
 
 
-                                <!-- Green Canal START-->
+                                <!-- Green Channel START-->
                                 <GroupBox
                                     IsEnabled="{Binding UseSeparateCanals}">
                                     <GroupBox.HeaderTemplate>
                                         <DataTemplate>
                                             <StackPanel>
                                                 <TextBlock
+                                                    Margin="10 0"
                                                     VerticalAlignment="Center"
-                                                    Text="Green canal (only 24 bit images)" />
+                                                    Text="Green channel (only 24 bit images)" />
                                             </StackPanel>
                                         </DataTemplate>
                                     </GroupBox.HeaderTemplate>
@@ -320,18 +324,19 @@
                                             Text="{Binding G_Max}" />
                                     </Grid>
                                 </GroupBox>
-                                <!-- Green Canal END-->
+                                <!-- Green Channel END-->
 
 
-                                <!-- Blue Canal START-->
+                                <!-- Blue Channel START-->
                                 <GroupBox
                                     IsEnabled="{Binding UseSeparateCanals}">
                                     <GroupBox.HeaderTemplate>
                                         <DataTemplate>
                                             <StackPanel>
                                                 <TextBlock
+                                                    Margin="10 0"
                                                     VerticalAlignment="Center"
-                                                    Text="Blue canal (only 24 bit images)" />
+                                                    Text="Blue channel (only 24 bit images)" />
                                             </StackPanel>
                                         </DataTemplate>
                                     </GroupBox.HeaderTemplate>
@@ -362,10 +367,10 @@
                                             Text="{Binding B_Max}" />
                                     </Grid>
                                 </GroupBox>
-                                <!-- Blue Canal END-->
+                                <!-- Blue Channel END-->
 
                             </StackPanel>
-                            <!-- Separate Canals END-->
+                            <!-- Separate Channels END-->
 
                         </StackPanel>
                         <!-- Uniform Probability Density Factors END-->

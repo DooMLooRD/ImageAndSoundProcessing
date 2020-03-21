@@ -200,7 +200,7 @@ namespace ImageProcessing.View.ViewModel
 
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.InitialDirectory = Environment.CurrentDirectory;
-            openFileDialog.Filter = "Image files (*.jpg)|*.jpg";
+            openFileDialog.Filter = "Image files (*.jpg; *.bmp; *.png)|*.jpg; *.bmp; *.png";
             if (openFileDialog.ShowDialog() == true)
             {
                 OriginalBitmap = new System.Drawing.Bitmap(openFileDialog.FileName);
