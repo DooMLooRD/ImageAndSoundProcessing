@@ -108,11 +108,7 @@ namespace ImageProcessing.Core.Helpers
 
         public static void ConvertToPixelFormat(Bitmap bitmap, out Bitmap result, PixelFormat pixelFormat)
         {
-            result = new Bitmap(bitmap.Width, bitmap.Height, pixelFormat);
-
-            Graphics g = Graphics.FromImage(result);
-            g.DrawImage(bitmap, 0, 0, bitmap.Width, bitmap.Height);
-            g.Dispose();
+            result = bitmap.Clone(new Rectangle(0, 0, bitmap.Width, bitmap.Height), pixelFormat);
         }
     }
 }
