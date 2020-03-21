@@ -71,25 +71,9 @@ namespace ImageProcessing.View.ViewModel
         public ICommand SetMaskTabCommand { get; set; }
         public DataView Mask { get; set; }
 
-        public Histogram OriginalHistogram
-        {
-            get => _originalHistogram;
-            set
-            {
-                _originalHistogram = value;
-                OriginalHistogramVm = new HistogramVM(value);
-            }
-        }
+        public Histogram OriginalHistogram { get; set; }
 
-        public Histogram ResultHistogram
-        {
-            get => _resultHistogram;
-            set
-            {
-                _resultHistogram = value;
-                ResultHistogramVm = new HistogramVM(value);
-            }
-        }
+        public Histogram ResultHistogram { get; set; }
 
         public bool IsHistogramShown { get; set; }
         public ICommand ShowHistogram { get; set; }
@@ -106,8 +90,6 @@ namespace ImageProcessing.View.ViewModel
         public Visibility HistogramSeparateFactorsVisible { get; set; } = new Visibility();
 
         public Visibility[] VisibilityProps;
-        private Histogram _resultHistogram;
-        private Histogram _originalHistogram;
 
         public MainWindowViewModel()
         {
@@ -246,6 +228,7 @@ namespace ImageProcessing.View.ViewModel
                     OriginalHistogram = ImageProcessor.CreateHistogram(OriginalBitmap);
                 });
 
+                OriginalHistogramVm = new HistogramVM(OriginalHistogram);
                 OriginalImage = LoadBitmap(OriginalBitmap);
             }
         }
@@ -326,6 +309,7 @@ namespace ImageProcessing.View.ViewModel
             });
 
             ResultImage = LoadBitmap(ResultBitmap);
+            ResultHistogramVm = new HistogramVM(ResultHistogram);
         }
 
 

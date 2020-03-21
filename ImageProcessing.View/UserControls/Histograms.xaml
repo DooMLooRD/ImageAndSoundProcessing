@@ -42,8 +42,7 @@
             </wpf:CartesianChart.AxisX>
             <wpf:CartesianChart.AxisY>
                 <wpf:Axis
-                    Title="Sold Apps"
-                    LabelFormatter="{Binding Formatter}"></wpf:Axis>
+                    Title="Sold Apps"></wpf:Axis>
             </wpf:CartesianChart.AxisY>
         </wpf:CartesianChart>
 
@@ -59,7 +58,7 @@
             <wpf:CartesianChart.AxisY>
                 <wpf:Axis
                     Title="Sold Apps"
-                    LabelFormatter="{Binding Formatter}"></wpf:Axis>
+                    ></wpf:Axis>
             </wpf:CartesianChart.AxisY>
         </wpf:CartesianChart>
 
@@ -75,7 +74,7 @@
             <wpf:CartesianChart.AxisY>
                 <wpf:Axis
                     Title="Sold Apps"
-                    LabelFormatter="{Binding Formatter}"></wpf:Axis>
+                    ></wpf:Axis>
             </wpf:CartesianChart.AxisY>
         </wpf:CartesianChart>
 
