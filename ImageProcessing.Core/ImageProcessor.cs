@@ -31,9 +31,9 @@ namespace ImageProcessing
 
             }
 
-            ImageHelper.ConvertToPixelFormat(resultBitmap, out Bitmap convertedResult, bitmap.PixelFormat);
+            //ImageHelper.ConvertToPixelFormat(resultBitmap, out Bitmap convertedResult, bitmap.PixelFormat);
 
-            return convertedResult;
+            return resultBitmap;
         }
 
         public static unsafe Histogram CreateHistogram(Bitmap bitmap)

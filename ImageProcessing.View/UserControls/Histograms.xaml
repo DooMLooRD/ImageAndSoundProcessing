@@ -44,8 +44,6 @@
                 <wpf:Axis
                     Labels="{Binding Labels}"></wpf:Axis>
             </wpf:CartesianChart.AxisX>
-            <wpf:CartesianChart.AxisY>
-            </wpf:CartesianChart.AxisY>
         </wpf:CartesianChart>
 
         <wpf:CartesianChart
@@ -61,8 +59,7 @@
                 <wpf:Axis
                     Labels="{Binding Labels}"></wpf:Axis>
             </wpf:CartesianChart.AxisX>
-            <wpf:CartesianChart.AxisY>
-            </wpf:CartesianChart.AxisY>
+
         </wpf:CartesianChart>
 
         <wpf:CartesianChart
@@ -78,8 +75,6 @@
                 <wpf:Axis
                     Labels="{Binding Labels}"></wpf:Axis>
             </wpf:CartesianChart.AxisX>
-            <wpf:CartesianChart.AxisY>
-            </wpf:CartesianChart.AxisY>
         </wpf:CartesianChart>
 
     </Grid>

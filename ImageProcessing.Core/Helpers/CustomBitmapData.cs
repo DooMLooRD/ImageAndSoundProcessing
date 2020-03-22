@@ -22,6 +22,7 @@ namespace ImageProcessing.Core.Helpers
         public CustomBitmapData(Bitmap bitmap)
         {
             OriginalBitmap = bitmap;
+            CopyBitmap = new Bitmap(OriginalBitmap);
 
             if (OriginalBitmap.PixelFormat != PixelFormat.Format24bppRgb)
             {
@@ -36,7 +37,6 @@ namespace ImageProcessing.Core.Helpers
             WidthInBytes = OriginalBitmapData.Width * BytesPerPixel;
             FirstPixelPtr = (byte*)OriginalBitmapData.Scan0;
 
-            CopyBitmap = new Bitmap(OriginalBitmap.Width, OriginalBitmap.Height, OriginalBitmap.PixelFormat);
             CopyBitmapData = CopyBitmap.LockBits(new Rectangle(0, 0, OriginalBitmap.Width, OriginalBitmap.Height),
                 ImageLockMode.ReadWrite, OriginalBitmap.PixelFormat);
             FirstPixelPtrCopy = (byte*)CopyBitmapData.Scan0;

@@ -145,7 +145,7 @@ namespace ImageProcessing.View.ViewModel
         {
             SaveFileDialog sfd = new SaveFileDialog
             {
-                Filter = "Bitmap file ( *.bmp)| *.bmp",
+                Filter = "Image file ( *.png)| *.png",
                 AddExtension = true,
                 OverwritePrompt = true,
                 RestoreDirectory = true
