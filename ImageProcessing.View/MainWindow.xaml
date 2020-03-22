@@ -58,7 +58,14 @@
                             Kind="OpenInApp"></materialDesign:PackIcon>
                     </MenuItem.Icon>
                 </MenuItem>
-
+                <MenuItem
+                    Header="_Save Result Image"
+                    Command="{Binding Save}">
+                    <MenuItem.Icon>
+                        <materialDesign:PackIcon
+                            Kind="ContentSave" />
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem
                 Header="_View">
@@ -69,7 +76,7 @@
                     Command="{Binding ShowHistogram}">
                 </MenuItem>
                 <MenuItem
-                    Header="_Show Evaluation Window"
+                    Header="Show Evaluation Window"
                     Command="{Binding OpenEvalWindow}">
                     <MenuItem.Icon>
                         <materialDesign:PackIcon

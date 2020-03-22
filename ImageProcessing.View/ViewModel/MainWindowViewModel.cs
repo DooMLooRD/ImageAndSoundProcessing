@@ -13,6 +13,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
@@ -92,6 +94,7 @@ namespace ImageProcessing.View.ViewModel
         public Visibility[] VisibilityProps;
 
         public ICommand OpenEvalWindow { get; set; }
+        public ICommand Save { get; set; }
 
 
         public MainWindowViewModel()
@@ -109,6 +112,7 @@ namespace ImageProcessing.View.ViewModel
             SetMaskTabCommand = new RelayCommand(SetMaskTab);
             ShowHistogram = new RelayCommand(OnShowHistogram);
             OpenEvalWindow = new RelayCommand(OnEvalWindowOpen);
+            Save = new RelayCommand(SaveResult);
 
             OriginalHistogramVm = new HistogramVM(OriginalHistogram);
             ResultHistogramVm = new HistogramVM(ResultHistogram);
@@ -136,6 +140,29 @@ namespace ImageProcessing.View.ViewModel
                 UolisNormalizationVisible,
                 HistogramFactorsVisible
             };
+        }
+
+        private void SaveResult()
+        {
+            SaveFileDialog sfd = new SaveFileDialog
+            {
+                Filter = "Bitmap file ( *.bmp)| *.bmp",
+                AddExtension = true,
+                OverwritePrompt = true,
+            };
+
+            if (sfd.ShowDialog() == true)
+            {
+                ResultBitmap.Save(sfd.FileName);
+                var p = new Process
+                {
+                    StartInfo = new ProcessStartInfo($@"{sfd.FileName}")
+                    {
+                        UseShellExecute = true
+                    }
+                };
+                p.Start();
+            }
         }
 
         private void OnEvalWindowOpen()
