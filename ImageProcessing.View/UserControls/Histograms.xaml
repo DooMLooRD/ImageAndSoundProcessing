@@ -1,4 +1,4 @@
-﻿<UserControl
+﻿ <UserControl
     x:Class="ImageProcessing.View.UserControls.Histograms"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -33,6 +33,7 @@
         </Grid.RowDefinitions>
         <wpf:CartesianChart
             Grid.Row="0"
+            Margin="0 5"
             IsManipulationEnabled="False"
             DataTooltip="{x:Null}"
             Hoverable="False"
@@ -41,17 +42,15 @@
             LegendLocation="None">
             <wpf:CartesianChart.AxisX>
                 <wpf:Axis
-                    Title="Histogram1"
                     Labels="{Binding Labels}"></wpf:Axis>
             </wpf:CartesianChart.AxisX>
             <wpf:CartesianChart.AxisY>
-                <wpf:Axis
-                    Title="Sold Apps"></wpf:Axis>
             </wpf:CartesianChart.AxisY>
         </wpf:CartesianChart>
 
         <wpf:CartesianChart
             Grid.Row="1"
+            Margin="0 5"
             IsManipulationEnabled="False"
             DataTooltip="{x:Null}"
             Hoverable="False"
@@ -60,18 +59,15 @@
             LegendLocation="None">
             <wpf:CartesianChart.AxisX>
                 <wpf:Axis
-                    Title="Histogram1"
                     Labels="{Binding Labels}"></wpf:Axis>
             </wpf:CartesianChart.AxisX>
             <wpf:CartesianChart.AxisY>
-                <wpf:Axis
-                    Title="Sold Apps"
-                    ></wpf:Axis>
             </wpf:CartesianChart.AxisY>
         </wpf:CartesianChart>
 
         <wpf:CartesianChart
             Grid.Row="2"
+            Margin="0 5"
             IsManipulationEnabled="False"
             DataTooltip="{x:Null}"
             Hoverable="False"
@@ -80,13 +76,9 @@
             LegendLocation="None">
             <wpf:CartesianChart.AxisX>
                 <wpf:Axis
-                    Title="Histogram1"
                     Labels="{Binding Labels}"></wpf:Axis>
             </wpf:CartesianChart.AxisX>
             <wpf:CartesianChart.AxisY>
-                <wpf:Axis
-                    Title="Sold Apps"
-                    ></wpf:Axis>
             </wpf:CartesianChart.AxisY>
         </wpf:CartesianChart>
 

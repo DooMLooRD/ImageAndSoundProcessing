@@ -13,12 +13,14 @@ namespace ImageProcessing.View.ViewModel
         public SeriesCollection Histogram2 { get; set; }
         public SeriesCollection Histogram3 { get; set; }
         public string[] Labels { get; set; }
+
         public HistogramVM(Histogram histogramToRender)
         {
             if (histogramToRender == null)
             {
                 return;
             }
+
             IsHistogramMulti = !histogramToRender.IsGreyscale;
 
             Histogram1 = new SeriesCollection();
@@ -27,34 +29,38 @@ namespace ImageProcessing.View.ViewModel
             {
                 return;
             }
+
             Histogram1 = new SeriesCollection{new ColumnSeries
             {
-                Values = getHistogramValues(histogramToRender.Values, 0),
+                Values = GetHistogramValues(histogramToRender.Values, 0),
                 Title = "h1",
                 ColumnPadding = 0.0
             }};
+
             if (!IsHistogramMulti)
             {
                 return;
             }
+
             Histogram2 = new SeriesCollection();
             Histogram3 = new SeriesCollection();
 
             Histogram2 = new SeriesCollection {new ColumnSeries
             {
-                Values = getHistogramValues(histogramToRender.Values, 1),
-                Title = "h1",
-                ColumnPadding = 0.0
-            }};
-            Histogram3 = new SeriesCollection{new ColumnSeries
-            {
-                Values = getHistogramValues(histogramToRender.Values, 2),
+                Values = GetHistogramValues(histogramToRender.Values, 1),
                 Title = "h1",
                 ColumnPadding = 0.0
             }};
 
+            Histogram3 = new SeriesCollection{new ColumnSeries
+            {
+                Values = GetHistogramValues(histogramToRender.Values, 2),
+                Title = "h1",
+                ColumnPadding = 0.0
+            }};
         }
-        public ChartValues<long> getHistogramValues(long[][] values, int valueIndex)
+
+        public ChartValues<long> GetHistogramValues(long[][] values, int valueIndex)
         {
             var labels = new List<string>();
 
@@ -71,6 +77,4 @@ namespace ImageProcessing.View.ViewModel
             return ret;
         }
     }
-
-
 }

@@ -35,7 +35,6 @@ namespace ImageProcessing.View.ViewModel
             }
 
             Results = ImageProcessor.FiltersEvaluation(OriginalBitmap, ResultBitmap).ToString();
-
         }
 
         public void LoadImage(Action<Bitmap> setBitmap, Action<string> setPath)
@@ -43,7 +42,8 @@ namespace ImageProcessing.View.ViewModel
             var openFileDialog = new OpenFileDialog
             {
                 InitialDirectory = Environment.CurrentDirectory,
-                Filter = "Image files (*.jpg; *.bmp; *.png)|*.jpg; *.bmp; *.png"
+                Filter = "Image files (*.jpg; *.bmp; *.png)|*.jpg; *.bmp; *.png",
+                RestoreDirectory = true
             };
 
             if (openFileDialog.ShowDialog() == true)
@@ -54,6 +54,4 @@ namespace ImageProcessing.View.ViewModel
             }
         }
     }
-
-
 }

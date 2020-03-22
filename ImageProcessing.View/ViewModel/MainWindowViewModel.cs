@@ -110,7 +110,6 @@ namespace ImageProcessing.View.ViewModel
             EnlargeOriginalImage = new RelayCommand(() => ShowImageInFullWindow(OriginalImage));
             EnlargeResultImage = new RelayCommand(() => ShowImageInFullWindow(ResultImage));
             SetMaskTabCommand = new RelayCommand(SetMaskTab);
-            ShowHistogram = new RelayCommand(OnShowHistogram);
             OpenEvalWindow = new RelayCommand(OnEvalWindowOpen);
             Save = new RelayCommand(SaveResult);
 
@@ -149,6 +148,7 @@ namespace ImageProcessing.View.ViewModel
                 Filter = "Bitmap file ( *.bmp)| *.bmp",
                 AddExtension = true,
                 OverwritePrompt = true,
+                RestoreDirectory = true
             };
 
             if (sfd.ShowDialog() == true)
@@ -173,11 +173,6 @@ namespace ImageProcessing.View.ViewModel
                 DataContext = vm
             };
             window.Show();
-
-        }
-
-        public void OnShowHistogram()
-        {
         }
 
         public void SetVisibility(string operation)
@@ -254,10 +249,11 @@ namespace ImageProcessing.View.ViewModel
 
         public async void LoadImage()
         {
-
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.InitialDirectory = Environment.CurrentDirectory;
             openFileDialog.Filter = "Image files (*.jpg; *.bmp; *.png)|*.jpg; *.bmp; *.png";
+            openFileDialog.RestoreDirectory = true;
+
             if (openFileDialog.ShowDialog() == true)
             {
                 OriginalBitmap = new System.Drawing.Bitmap(openFileDialog.FileName);

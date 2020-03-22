@@ -3,6 +3,7 @@ using ImageProcessing.Core.Helpers;
 using ImageProcessing.Core.Interfaces;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Linq;
 
 namespace ImageProcessing
 {
@@ -77,8 +78,9 @@ namespace ImageProcessing
             using var bitmapData = new CustomBitmapData(originalBitmap);
             using var resultBitmapData = new CustomBitmapData(resultBitmap);
 
-            var sum = 0.0;
-            var abs = 0.0;
+            double sum = 0.0;
+
+            double abs = 0.0;
 
             const double k = 255.0;
 
@@ -90,24 +92,18 @@ namespace ImageProcessing
                 {
                     byte* currentPixelPtr = ImageHelper.SetPixelPointer(bitmapData, x, y);
                     byte* rCurrentPixelPtr = ImageHelper.SetPixelPointer(resultBitmapData, x, y);
-                    var pixelValue = 0;
-                    var rPixelValue = 0;
                     for (int i = 0; i < 3; i++)
                     {
-                        pixelValue += currentPixelPtr[i];
-                        rPixelValue += rCurrentPixelPtr[i];
+                        sum += Math.Pow(currentPixelPtr[i] - rCurrentPixelPtr[i], 2);
+                        abs += Math.Abs(currentPixelPtr[i] - rCurrentPixelPtr[i]);
                     }
-                    pixelValue /= 3;
-                    rPixelValue /= 3;
-                    sum += Math.Pow(pixelValue - rPixelValue, 2);
-                    abs += Math.Abs(pixelValue - rPixelValue);
                 }
             }
 
-            var nm = bitmapData.OriginalBitmap.Width * bitmapData.OriginalBitmap.Height;
+            var nm = bitmapData.OriginalBitmap.Width * bitmapData.OriginalBitmap.Height * 3;
 
             var fraction = 1.0 / nm;
-            
+
             var mse = fraction * sum;
             var psnr = 10.0 * Math.Log10(Math.Pow(k, 2) / mse);
             var mae = fraction * abs;
