@@ -67,12 +67,15 @@
                     IsCheckable="True"
                     IsChecked="{Binding IsHistogramShown}"
                     Command="{Binding ShowHistogram}">
+                </MenuItem>
+                <MenuItem
+                    Header="_Show Evaluation Window"
+                    Command="{Binding OpenEvalWindow}">
                     <MenuItem.Icon>
                         <materialDesign:PackIcon
-                            Kind="OpenInApp"></materialDesign:PackIcon>
+                            Kind="Pageview" />
                     </MenuItem.Icon>
                 </MenuItem>
-
             </MenuItem>
         </Menu>
 

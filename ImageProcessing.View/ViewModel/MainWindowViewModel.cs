@@ -91,6 +91,9 @@ namespace ImageProcessing.View.ViewModel
 
         public Visibility[] VisibilityProps;
 
+        public ICommand OpenEvalWindow { get; set; }
+
+
         public MainWindowViewModel()
         {
             MaskSize = 3;
@@ -105,6 +108,7 @@ namespace ImageProcessing.View.ViewModel
             EnlargeResultImage = new RelayCommand(() => ShowImageInFullWindow(ResultImage));
             SetMaskTabCommand = new RelayCommand(SetMaskTab);
             ShowHistogram = new RelayCommand(OnShowHistogram);
+            OpenEvalWindow = new RelayCommand(OnEvalWindowOpen);
 
             OriginalHistogramVm = new HistogramVM(OriginalHistogram);
             ResultHistogramVm = new HistogramVM(ResultHistogram);
@@ -132,6 +136,17 @@ namespace ImageProcessing.View.ViewModel
                 UolisNormalizationVisible,
                 HistogramFactorsVisible
             };
+        }
+
+        private void OnEvalWindowOpen()
+        {
+            EvaluationWindowVM vm = new EvaluationWindowVM();
+            EvaluationWindow window = new EvaluationWindow
+            {
+                DataContext = vm
+            };
+            window.Show();
+
         }
 
         public void OnShowHistogram()

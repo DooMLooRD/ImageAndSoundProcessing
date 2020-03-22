@@ -1,4 +1,5 @@
-﻿using ImageProcessing.Core.Helpers;
+﻿using System;
+using ImageProcessing.Core.Helpers;
 using ImageProcessing.Core.Interfaces;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -20,7 +21,7 @@ namespace ImageProcessing
                 for (int y = offset; y < bitmapData.HeightInPixels - offset; y++)
                 {
                     for (int x = offset * bitmapData.BytesPerPixel;
-                        x < bitmapData.WidthInBytes - (offset * bitmapData.BytesPerPixel);
+                        x < bitmapData.WidthInBytes - offset * bitmapData.BytesPerPixel;
                         x += bitmapData.BytesPerPixel)
                     {
                         processBitmap.ProcessPixel(bitmapData, x, y);
@@ -68,6 +69,54 @@ namespace ImageProcessing
                 || bitmap.PixelFormat == PixelFormat.Format16bppGrayScale,
 
                 Values = result
+            };
+        }
+
+        public static unsafe FiltersEvaluationData FiltersEvaluation(Bitmap originalBitmap, Bitmap resultBitmap)
+        {
+            using var bitmapData = new CustomBitmapData(originalBitmap);
+            using var resultBitmapData = new CustomBitmapData(resultBitmap);
+
+            var sum = 0.0;
+            var abs = 0.0;
+
+            const double k = 255.0;
+
+            for (int y = 0; y < bitmapData.HeightInPixels; y++)
+            {
+                for (int x = 0;
+                    x < bitmapData.WidthInBytes;
+                    x += bitmapData.BytesPerPixel)
+                {
+                    byte* currentPixelPtr = ImageHelper.SetPixelPointer(bitmapData, x, y);
+                    byte* rCurrentPixelPtr = ImageHelper.SetPixelPointer(resultBitmapData, x, y);
+                    var pixelValue = 0;
+                    var rPixelValue = 0;
+                    for (int i = 0; i < 3; i++)
+                    {
+                        pixelValue += currentPixelPtr[i];
+                        rPixelValue += rCurrentPixelPtr[i];
+                    }
+                    pixelValue /= 3;
+                    rPixelValue /= 3;
+                    sum += Math.Pow(pixelValue - rPixelValue, 2);
+                    abs += Math.Abs(pixelValue - rPixelValue);
+                }
+            }
+
+            var nm = bitmapData.OriginalBitmap.Width * bitmapData.OriginalBitmap.Height;
+
+            var fraction = 1.0 / nm;
+            
+            var mse = fraction * sum;
+            var psnr = 10.0 * Math.Log10(Math.Pow(k, 2) / mse);
+            var mae = fraction * abs;
+
+            return new FiltersEvaluationData
+            {
+                Mse = mse,
+                Psnr = psnr,
+                Mae = mae
             };
         }
     }
