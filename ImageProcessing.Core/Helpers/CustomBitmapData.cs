@@ -22,7 +22,7 @@ namespace ImageProcessing.Core.Helpers
         public CustomBitmapData(Bitmap bitmap)
         {
             OriginalBitmap = bitmap;
-            CopyBitmap = new Bitmap(OriginalBitmap);
+            CopyBitmap = bitmap.Clone(new Rectangle(0, 0, bitmap.Width, bitmap.Height), bitmap.PixelFormat);
 
             if (OriginalBitmap.PixelFormat != PixelFormat.Format24bppRgb)
             {

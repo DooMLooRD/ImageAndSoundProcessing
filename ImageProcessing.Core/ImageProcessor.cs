@@ -15,10 +15,8 @@ namespace ImageProcessing
             IProcessingOperation processBitmap,
             int offset = 0)
         {
-            Bitmap resultBitmap;
             using (var bitmapData = new CustomBitmapData(bitmap))
             {
-                resultBitmap = bitmapData.CopyBitmap;
                 for (int y = offset; y < bitmapData.HeightInPixels - offset; y++)
                 {
                     for (int x = offset * bitmapData.BytesPerPixel;
@@ -29,11 +27,10 @@ namespace ImageProcessing
                     }
                 }
 
+                ImageHelper.ConvertToPixelFormat(bitmapData.CopyBitmap, out Bitmap convertedResult, bitmap.PixelFormat);
+
+                return convertedResult;
             }
-
-            //ImageHelper.ConvertToPixelFormat(resultBitmap, out Bitmap convertedResult, bitmap.PixelFormat);
-
-            return resultBitmap;
         }
 
         public static unsafe Histogram CreateHistogram(Bitmap bitmap)
