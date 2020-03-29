@@ -20,8 +20,7 @@ namespace ImageProcessing.View.ViewModel
         public ImageSource PhaseImage { get; set; }
         public ImageSource MagnitudeImage { get; set; }
 
-        public System.Drawing.Bitmap Bitmap { get; set; }
-        public FourierResult FourierResult { get; set; }
+        public ImageComponents ImageComponents { get; set; }
 
         public HistogramVM HistogramVm { get; set; }
         public Histogram Histogram { get; set; }
@@ -47,17 +46,30 @@ namespace ImageProcessing.View.ViewModel
 
         public async void LoadData(System.Drawing.Bitmap bitmap)
         {
-            Bitmap = bitmap;
             await Task.Run(() =>
             {
                 Histogram = ImageProcessor.CreateHistogram(bitmap);
-                FourierResult = FastFourierTransform.FFT2D(bitmap);
+                ImageComponents = FastFourierTransform.FFT2D(bitmap);
             });
 
             HistogramVm = new HistogramVM(Histogram);
-            ResultImage = ImageGdiHelper.LoadBitmap(Bitmap);
-            PhaseImage = ImageGdiHelper.LoadBitmap(FourierResult.PhaseImage);
-            MagnitudeImage = ImageGdiHelper.LoadBitmap(FourierResult.MagnitudeImage);
+            ResultImage = ImageGdiHelper.LoadBitmap(ImageComponents.Image);
+            PhaseImage = ImageGdiHelper.LoadBitmap(ImageComponents.PhaseImage);
+            MagnitudeImage = ImageGdiHelper.LoadBitmap(ImageComponents.MagnitudeImage);
+        }
+
+        public async void LoadData(ImageComponents imageComponents)
+        {
+            await Task.Run(() =>
+            {
+                Histogram = ImageProcessor.CreateHistogram(imageComponents.Image);
+            });
+
+            ImageComponents = imageComponents;
+            HistogramVm = new HistogramVM(Histogram);
+            ResultImage = ImageGdiHelper.LoadBitmap(ImageComponents.Image);
+            PhaseImage = ImageGdiHelper.LoadBitmap(ImageComponents.PhaseImage);
+            MagnitudeImage = ImageGdiHelper.LoadBitmap(ImageComponents.MagnitudeImage);
         }
     }
 }

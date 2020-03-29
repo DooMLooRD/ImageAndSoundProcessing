@@ -46,11 +46,11 @@ namespace ImageProcessing.Core.FourierTransform
             }
         }
 
-        public static FourierResult FFT2D(Bitmap bitmap)
+        public static ImageComponents FFT2D(Bitmap bitmap)
         {
             using (SingleBitmapData bitmapData = new SingleBitmapData(bitmap, false))
             {
-                var data = CollectionHelper.Create2DComplexArray(bitmapData.WidthInBytes, bitmapData.HeightInPixels);
+                var data = CollectionHelper.Create2DArray<Complex>(bitmapData.WidthInBytes, bitmapData.HeightInPixels);
 
                 for (int y = 0; y < bitmapData.HeightInPixels; y++)
                 {
@@ -74,7 +74,7 @@ namespace ImageProcessing.Core.FourierTransform
                     FFT1D(swappedData[i]);
                 }
 
-                return new FourierResult(swappedData, bitmap);
+                return new ImageComponents(swappedData, bitmap);
             }
         }
 

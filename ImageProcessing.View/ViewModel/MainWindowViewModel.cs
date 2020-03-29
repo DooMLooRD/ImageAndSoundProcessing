@@ -10,6 +10,8 @@ namespace ImageProcessing.View.ViewModel
 
         public ResultsViewModel ResultsViewModel { get; set; }
         public BasicViewModel BasicViewModel { get; set; }
+        public ComplexViewModel ComplexViewModel { get; set; }
+
 
         public ICommand OpenEvalWindow { get; set; }
         public ICommand Save { get; set; }
@@ -20,6 +22,7 @@ namespace ImageProcessing.View.ViewModel
         {
             ResultsViewModel = new ResultsViewModel();
             BasicViewModel= new BasicViewModel(ResultsViewModel);
+            ComplexViewModel = new ComplexViewModel(ResultsViewModel);
 
             Open = new RelayCommand(ResultsViewModel.LoadImage);
             OpenEvalWindow = new RelayCommand(OnEvalWindowOpen);

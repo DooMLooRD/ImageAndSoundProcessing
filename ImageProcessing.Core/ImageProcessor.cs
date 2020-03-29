@@ -4,6 +4,7 @@ using ImageProcessing.Core.Interfaces;
 using System.Drawing;
 using System.Drawing.Imaging;
 using ImageProcessing.Core.Model;
+using ImageProcessing.Core.FourierTransform;
 
 namespace ImageProcessing
 {
@@ -27,7 +28,7 @@ namespace ImageProcessing
                     }
                 }
 
-                if(bitmap.PixelFormat == PixelFormat.Format1bppIndexed)
+                if (bitmap.PixelFormat == PixelFormat.Format1bppIndexed)
                 {
                     ImageHelper.ConvertToPixelFormat(bitmapData.CopyBitmap, out Bitmap convertedBitmap, bitmap.PixelFormat);
                     return convertedBitmap;
@@ -35,6 +36,22 @@ namespace ImageProcessing
 
                 return bitmapData.CopyBitmap;
             }
+        }
+
+        public static unsafe ImageComponents ProcessFourierImage(
+            ImageComponents imageComponents,
+            IProcessingFourierOperation fourierOperation)
+        {
+            var clonedData = CollectionHelper.Clone(imageComponents.ComplexData);
+            
+            FourierHelper.SwapQuadrants(clonedData);
+            fourierOperation.ProcessImage(clonedData);
+            FourierHelper.SwapQuadrants(clonedData);
+
+            var processedData = CollectionHelper.Clone(clonedData);
+            var bitmap = FastFourierTransform.IFFT2D(processedData, imageComponents.Image);
+
+            return new ImageComponents(clonedData, bitmap);
         }
 
         public static unsafe Histogram CreateHistogram(Bitmap bitmap)

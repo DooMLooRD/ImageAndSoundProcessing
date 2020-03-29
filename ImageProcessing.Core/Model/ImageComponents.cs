@@ -4,16 +4,18 @@ using System.Numerics;
 
 namespace ImageProcessing.Core.Model
 {
-    public unsafe class FourierResult
+    public unsafe class ImageComponents
     {
         public Complex[][] ComplexData { get; set; }
 
+        public Bitmap Image { get; set; }
         public Bitmap PhaseImage { get; set; }
         public Bitmap MagnitudeImage { get; set; }
 
-        public FourierResult(Complex[][] complexData, Bitmap originalImage)
+        public ImageComponents(Complex[][] complexData, Bitmap originalImage)
         {
             ComplexData = complexData;
+            Image = originalImage.Clone(new Rectangle(0, 0, originalImage.Width, originalImage.Height), originalImage.PixelFormat);
             FillResultImages(originalImage);
         }
 

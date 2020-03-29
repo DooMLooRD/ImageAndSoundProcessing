@@ -229,11 +229,11 @@ namespace ImageProcessing.View.ViewModel
             System.Drawing.Bitmap bitmap = null;
             await Task.Run(() =>
             {
-                bitmap = ImageProcessor.ProcessImage(ResultsViewModel.OriginalResult.Bitmap, operation, offset);
+                bitmap = ImageProcessor.ProcessImage(ResultsViewModel.OriginalResult.ImageComponents.Image, operation, offset);
 
                 if (ConvertResultToGreyscale)
                 {
-                    bitmap = ImageProcessor.ProcessImage(ResultsViewModel.ProcessedResult.Bitmap, new GreyscaleOperation());
+                    bitmap = ImageProcessor.ProcessImage(bitmap, new GreyscaleOperation());
                 }
             });
 

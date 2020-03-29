@@ -83,7 +83,7 @@
             <usercontrols:ComplexView
                 Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.IsComplexView, Converter={StaticResource BoolToVisConverter} }"
                 Grid.Column="0"
-                DataContext="{Binding BasicViewModel}" />
+                DataContext="{Binding ComplexViewModel}" />
             <usercontrols:ResultsView
                 Grid.Column="1"
                 DataContext="{Binding ResultsViewModel}" />

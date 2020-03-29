@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace ImageProcessing.Core.Helpers
 {
-    public class CollectionHelper
+    public static class CollectionHelper
     {
         public static Complex[][] SwapRowColumn(Complex[][] data)
         {
@@ -39,13 +39,28 @@ namespace ImageProcessing.Core.Helpers
             }
         }
 
-        public static Complex[][] Create2DComplexArray(int width, int height)
+        public static T[][] Create2DArray<T>(int width, int height)
         {
-            var data = new Complex[height][];
+            var data = new T[height][];
 
             for (int i = 0; i < height; i++)
             {
-                data[i] = new Complex[width];
+                data[i] = new T[width];
+            }
+
+            return data;
+        }
+
+        public static T[][] Clone<T>(T[][] array)
+        {
+            var data = Create2DArray<T>(array[0].Length, array.Length);
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                for (int j = 0; j < data[i].Length; j++)
+                {
+                    data[i][j] = array[i][j];
+                }
             }
 
             return data;

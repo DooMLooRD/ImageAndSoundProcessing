@@ -49,7 +49,7 @@ namespace ImageProcessing.View.ViewModel
 
             if (sfd.ShowDialog() == true)
             {
-                ProcessedResult.Bitmap.Save(sfd.FileName);
+                ProcessedResult.ImageComponents.Image.Save(sfd.FileName);
                 var p = new Process
                 {
                     StartInfo = new ProcessStartInfo($@"{sfd.FileName}")

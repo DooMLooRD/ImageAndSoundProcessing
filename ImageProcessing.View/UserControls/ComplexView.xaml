@@ -49,12 +49,59 @@
                 <ComboBox
                     materialDesign:HintAssist.FloatingScale="1.2"
                     materialDesign:HintAssist.FloatingOffset="0, -20"
-                    materialDesign:HintAssist.Hint="Operation"
+                    materialDesign:HintAssist.Hint="Fourier Operation"
                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                     Margin="0 15"
-                    ItemsSource="{Binding Operations}"
+                    ItemsSource="{Binding FourierOperations}"
                     SelectedItem="{Binding SelectedOperation}" />
-
+                <TextBox
+                    materialDesign:HintAssist.FloatingScale="1.2"
+                    materialDesign:HintAssist.FloatingOffset="0, -20"
+                    materialDesign:HintAssist.Hint="Filter Radius"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    Margin="0 15"
+                    Text="{Binding FilterRadius}"
+                    Visibility="{Binding Path=FilterRadiusVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
+                <TextBox
+                    materialDesign:HintAssist.FloatingScale="1.2"
+                    materialDesign:HintAssist.FloatingOffset="0, -20"
+                    materialDesign:HintAssist.Hint="Filter Size"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    Margin="0 15"
+                    Text="{Binding FilterSize}"
+                    Visibility="{Binding Path=FilterSizeVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
+                <TextBox
+                    materialDesign:HintAssist.FloatingScale="1.2"
+                    materialDesign:HintAssist.FloatingOffset="0, -20"
+                    materialDesign:HintAssist.Hint="k"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    Margin="0 15"
+                    Text="{Binding K}"
+                    Visibility="{Binding Path=KVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
+                <TextBox
+                    materialDesign:HintAssist.FloatingScale="1.2"
+                    materialDesign:HintAssist.FloatingOffset="0, -20"
+                    materialDesign:HintAssist.Hint="l"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    Margin="0 15"
+                    Text="{Binding L}"
+                    Visibility="{Binding Path=LVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
+                <TextBox
+                    materialDesign:HintAssist.FloatingScale="1.2"
+                    materialDesign:HintAssist.FloatingOffset="0, -20"
+                    materialDesign:HintAssist.Hint="Filter Angle"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    Margin="0 15"
+                    Text="{Binding FilterAngle}"
+                    Visibility="{Binding Path=FilterAngleVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
+                <TextBox
+                    materialDesign:HintAssist.FloatingScale="1.2"
+                    materialDesign:HintAssist.FloatingOffset="0, -20"
+                    materialDesign:HintAssist.Hint="Filter Angle Offset"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    Margin="0 15"
+                    Text="{Binding FilterAngleOffset}"
+                    Visibility="{Binding Path=FilterAngleOffsetVisible.Visible, Converter={StaticResource BoolToVisConverter} }" />
                 <Button
                     Margin="0 5"
                     Content="Apply"
