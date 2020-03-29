@@ -1,12 +1,13 @@
 ﻿using ImageProcessing.Core.Helpers;
 using ImageProcessing.Core.Interfaces;
+using ImageProcessing.Core.Model;
 using System;
 
 namespace ImageProcessing.Core.NonLinearFilters
 {
     public class SobelOperator : IProcessingOperation
     {
-        public unsafe void ProcessPixel(CustomBitmapData customBitmap, int x, int y)
+        public unsafe void ProcessPixel(ExtendedBitmapData customBitmap, int x, int y)
         {
             byte* resultPixelPtr = ImageHelper.SetResultPixelPointer(customBitmap, x, y);
             byte*[] a = ImageHelper.GetNeighborhood(customBitmap, x, y);

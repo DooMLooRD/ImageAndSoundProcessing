@@ -1,0 +1,67 @@
+﻿<UserControl
+    x:Class="ImageProcessing.View.UserControls.ComplexView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ImageProcessing.View.UserControls"
+    mc:Ignorable="d"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:converters="clr-namespace:ImageProcessing.View.Converters"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextElement.FontWeight="Regular"
+    TextElement.FontSize="13"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    Background="{DynamicResource MaterialDesignPaper}"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    d:DesignHeight="450"
+    d:DesignWidth="800">
+    <GroupBox
+        Header="Fourier Operations"
+        BorderThickness="0"
+        materialDesign:ShadowAssist.ShadowDepth="Depth5"
+        Padding="0"
+        Margin="16">
+        <GroupBox.HeaderTemplate>
+            <DataTemplate>
+                <StackPanel
+                    Margin="16 8"
+                    Orientation="Horizontal">
+                    <materialDesign:PackIcon
+                        Kind="Build"
+                        Height="32"
+                        Width="32"
+                        VerticalAlignment="Center" />
+                    <TextBlock
+                        Margin="8,0,0,0"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                        Text="{Binding}" />
+                </StackPanel>
+            </DataTemplate>
+        </GroupBox.HeaderTemplate>
+        <ScrollViewer
+            VerticalScrollBarVisibility="Auto"
+            HorizontalScrollBarVisibility="Disabled">
+            <StackPanel
+                Margin="10">
+                <ComboBox
+                    materialDesign:HintAssist.FloatingScale="1.2"
+                    materialDesign:HintAssist.FloatingOffset="0, -20"
+                    materialDesign:HintAssist.Hint="Operation"
+                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                    Margin="0 15"
+                    ItemsSource="{Binding Operations}"
+                    SelectedItem="{Binding SelectedOperation}" />
+
+                <Button
+                    Margin="0 5"
+                    Content="Apply"
+                    Command="{Binding ApplyOperationCommand}" />
+            </StackPanel>
+        </ScrollViewer>
+
+    </GroupBox>
+    <!-- Image processing configuration END -->
+</UserControl>

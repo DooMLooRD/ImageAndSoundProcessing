@@ -1,6 +1,4 @@
-﻿using ImageProcessing.Core.BasicImageOperations;
-using ImageProcessing.View.ViewModel;
-using System.Drawing;
+﻿using ImageProcessing.View.ViewModel;
 using System.Windows;
 
 namespace ImageProcessing.View

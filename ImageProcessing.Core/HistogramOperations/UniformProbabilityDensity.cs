@@ -1,5 +1,6 @@
 ﻿using ImageProcessing.Core.Helpers;
 using ImageProcessing.Core.Interfaces;
+using ImageProcessing.Core.Model;
 
 namespace ImageProcessing.Core.HistogramOperations
 {
@@ -22,7 +23,7 @@ namespace ImageProcessing.Core.HistogramOperations
             _gMax = new[] { rMax, gMax, bMax };
         }
 
-        public unsafe void ProcessPixel(CustomBitmapData bitmapData, int x, int y)
+        public unsafe void ProcessPixel(ExtendedBitmapData bitmapData, int x, int y)
         {
             byte* resultPixelPtr = ImageHelper.SetResultPixelPointer(bitmapData, x, y);
 

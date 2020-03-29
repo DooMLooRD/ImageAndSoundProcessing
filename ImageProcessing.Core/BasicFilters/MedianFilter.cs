@@ -1,5 +1,6 @@
 ﻿using ImageProcessing.Core.Helpers;
 using ImageProcessing.Core.Interfaces;
+using ImageProcessing.Core.Model;
 using System.Linq;
 
 namespace ImageProcessing.Core.BasicFilters
@@ -13,7 +14,7 @@ namespace ImageProcessing.Core.BasicFilters
             _windowSize = windowSize;
         }
 
-        public unsafe void ProcessPixel(CustomBitmapData customBitmap, int x, int y)
+        public unsafe void ProcessPixel(ExtendedBitmapData customBitmap, int x, int y)
         {
             byte* resultPixelPtr = ImageHelper.SetResultPixelPointer(customBitmap, x, y);
 
@@ -21,7 +22,7 @@ namespace ImageProcessing.Core.BasicFilters
 
             for (int i = 0; i < customBitmap.BytesPerPixel; i++)
             {
-                double result = window[i].OrderBy(c => c).ElementAt(_windowSize / 2);
+                double result = window[i].OrderBy(c => c).ElementAt(_windowSize * _windowSize / 2);
                 resultPixelPtr[i] = (byte)ImageHelper.FixOverflow(result);
             }
         }

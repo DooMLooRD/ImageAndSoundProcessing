@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using ImageProcessing.Core.Model;
+using System.Drawing;
 using System.Drawing.Imaging;
 
 namespace ImageProcessing.Core.Helpers
@@ -37,7 +38,7 @@ namespace ImageProcessing.Core.Helpers
             return value;
         }
 
-        public unsafe static byte*[] GetNeighborhood(CustomBitmapData bitmapData, int x, int y)
+        public unsafe static byte*[] GetNeighborhood(ExtendedBitmapData bitmapData, int x, int y)
         {
             byte*[] a = new byte*[8];
 
@@ -53,7 +54,7 @@ namespace ImageProcessing.Core.Helpers
             return a;
         }
 
-        public unsafe static byte*[] GetWindowPtrs(CustomBitmapData bitmapData, int xMiddle, int yMiddle, int windowSize)
+        public unsafe static byte*[] GetWindowPtrs(ExtendedBitmapData bitmapData, int xMiddle, int yMiddle, int windowSize)
         {
             byte*[] a = new byte*[windowSize * windowSize];
 
@@ -72,7 +73,7 @@ namespace ImageProcessing.Core.Helpers
             return a;
         }
 
-        public unsafe static int[][] GetWindow(CustomBitmapData bitmapData, int xMiddle, int yMiddle, int windowSize)
+        public unsafe static int[][] GetWindow(ExtendedBitmapData bitmapData, int xMiddle, int yMiddle, int windowSize)
         {
             int[][] a = new int[bitmapData.BytesPerPixel][];
 
@@ -94,12 +95,13 @@ namespace ImageProcessing.Core.Helpers
 
             return a;
         }
-        public unsafe static byte* SetPixelPointer(CustomBitmapData bitmapData, int x, int y)
+
+        public unsafe static byte* SetPixelPointer(ExtendedBitmapData bitmapData, int x, int y)
         {
             return bitmapData.FirstPixelPtr + y * bitmapData.WidthInBytes + x;
         }
 
-        public unsafe static byte* SetResultPixelPointer(CustomBitmapData bitmapData, int x, int y)
+        public unsafe static byte* SetResultPixelPointer(ExtendedBitmapData bitmapData, int x, int y)
         {
             byte* currentPixelPtr = bitmapData.FirstPixelPtrCopy;
             currentPixelPtr += y * bitmapData.WidthInBytes + x;

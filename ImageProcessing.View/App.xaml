@@ -12,7 +12,27 @@
                 x:Key="BoolToVisConverter" />
             <converters:InverseBoolConverter
                 x:Key="InverseBoolConverter" />
-            <converters:BootToVerticalAlignmentConverter x:Key="BootToVerticalAlignmentConverter" />
+            <converters:ParametrizedBooleanToVisibilityConverter
+                x:Key="ParametrizedBooleanToVisibilityConverter" />
+            <converters:RadioBoolToResultTypeConverter
+                x:Key="RadioBoolToResultTypeConverter" />
+            <converters:ResultTypeConverter
+                x:Key="ResultTypeConverter" />
+            <Style
+                TargetType="{x:Type Button}"
+                x:Key="ImageButtonStyle">
+                <Setter
+                    Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate
+                            TargetType="{x:Type Button}">
+                            <ContentPresenter />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <converters:BootToVerticalAlignmentConverter
+                x:Key="BootToVerticalAlignmentConverter" />
             <ResourceDictionary.MergedDictionaries>
                 <materialDesign:BundledTheme
                     BaseTheme="Dark"

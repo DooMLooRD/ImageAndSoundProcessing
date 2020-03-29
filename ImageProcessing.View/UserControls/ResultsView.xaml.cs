@@ -3,11 +3,11 @@
 namespace ImageProcessing.View.UserControls
 {
     /// <summary>
-    /// Interaction logic for Histograms.xaml
+    /// Interaction logic for ResultsView.xaml
     /// </summary>
-    public partial class Histograms : UserControl
+    public partial class ResultsView : UserControl
     {
-        public Histograms()
+        public ResultsView()
         {
             InitializeComponent();
         }

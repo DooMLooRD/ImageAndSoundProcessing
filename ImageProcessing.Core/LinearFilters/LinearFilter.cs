@@ -1,5 +1,6 @@
 ﻿using ImageProcessing.Core.Helpers;
 using ImageProcessing.Core.Interfaces;
+using ImageProcessing.Core.Model;
 
 namespace ImageProcessing.Core.LinearFilters
 {
@@ -14,7 +15,7 @@ namespace ImageProcessing.Core.LinearFilters
             _maskSize = maskSize;
         }
 
-        public unsafe void ProcessPixel(CustomBitmapData customBitmap, int x, int y)
+        public unsafe void ProcessPixel(ExtendedBitmapData customBitmap, int x, int y)
         {
             byte* resultPixelPtr = ImageHelper.SetResultPixelPointer(customBitmap, x, y);
             byte*[] a = ImageHelper.GetWindowPtrs(customBitmap, x, y, _maskSize);

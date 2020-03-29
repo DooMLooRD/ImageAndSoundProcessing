@@ -1,10 +1,11 @@
-﻿using System;
+﻿using ImageProcessing.Core.Helpers;
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace ImageProcessing.Core.Helpers
+namespace ImageProcessing.Core.Model
 {
-    public unsafe class CustomBitmapData : IDisposable
+    public unsafe class ExtendedBitmapData : IDisposable
     {
         public BitmapData OriginalBitmapData { get; set; }
         public BitmapData CopyBitmapData { get; set; }
@@ -19,16 +20,17 @@ namespace ImageProcessing.Core.Helpers
         public byte* FirstPixelPtrCopy { get; set; }
 
 
-        public CustomBitmapData(Bitmap bitmap)
+        public ExtendedBitmapData(Bitmap bitmap)
         {
             OriginalBitmap = bitmap;
-            CopyBitmap = bitmap.Clone(new Rectangle(0, 0, bitmap.Width, bitmap.Height), bitmap.PixelFormat);
 
-            if (OriginalBitmap.PixelFormat != PixelFormat.Format24bppRgb)
+            if (OriginalBitmap.PixelFormat == PixelFormat.Format1bppIndexed)
             {
                 ImageHelper.ConvertToPixelFormat(bitmap, out Bitmap result, PixelFormat.Format24bppRgb);
                 OriginalBitmap = result;
             }
+
+            CopyBitmap = OriginalBitmap.Clone(new Rectangle(0, 0, OriginalBitmap.Width, OriginalBitmap.Height), OriginalBitmap.PixelFormat);
 
             OriginalBitmapData = OriginalBitmap.LockBits(new Rectangle(0, 0, OriginalBitmap.Width, OriginalBitmap.Height),
                 ImageLockMode.ReadWrite, OriginalBitmap.PixelFormat);

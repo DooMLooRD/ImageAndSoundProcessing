@@ -1,4 +1,4 @@
-﻿namespace ImageProcessing.Core.Helpers
+﻿namespace ImageProcessing.Core.Model
 {
     public class FiltersEvaluationData
     {

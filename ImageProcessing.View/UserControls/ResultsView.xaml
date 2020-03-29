@@ -1,0 +1,92 @@
+﻿<UserControl
+    x:Class="ImageProcessing.View.UserControls.ResultsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ImageProcessing.View.UserControls"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:converters="clr-namespace:ImageProcessing.View.Converters"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextElement.FontWeight="Regular"
+    TextElement.FontSize="13"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    Background="{DynamicResource MaterialDesignPaper}"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    mc:Ignorable="d"
+    d:DesignHeight="450"
+    d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition
+                Width="*" />
+            <ColumnDefinition
+                Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Original Image START -->
+        <GroupBox
+            Grid.Column="0"
+            Header="Original Image"
+            BorderThickness="0"
+            VerticalAlignment="Stretch"
+            Style="{DynamicResource MaterialDesignCardGroupBox}"
+            Padding="0"
+            Margin="16">
+            <GroupBox.HeaderTemplate>
+                <DataTemplate>
+                    <StackPanel
+                        Margin="16 8"
+                        Orientation="Horizontal">
+                        <materialDesign:PackIcon
+                            Kind="ImageArea"
+                            Height="32"
+                            Width="32"
+                            VerticalAlignment="Center" />
+                        <TextBlock
+                            Margin="8,0,0,0"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                            Text="{Binding}" />
+                    </StackPanel>
+                </DataTemplate>
+            </GroupBox.HeaderTemplate>
+            <local:SingleResultView
+                DataContext="{Binding OriginalResult}" />
+        </GroupBox>
+        <!-- Original Image END -->
+
+        <!-- Result Image START -->
+        <GroupBox
+            Grid.Column="1"
+            Header="Processed Image"
+            BorderThickness="0"
+            Style="{DynamicResource MaterialDesignCardGroupBox}"
+            Padding="0"
+            Margin="16"
+            VerticalAlignment="Stretch">
+            <GroupBox.HeaderTemplate>
+                <DataTemplate>
+                    <StackPanel
+                        Margin="16 8"
+                        Orientation="Horizontal">
+                        <materialDesign:PackIcon
+                            Kind="ImageArea"
+                            Height="32"
+                            Width="32"
+                            VerticalAlignment="Center" />
+                        <TextBlock
+                            Margin="8,0,0,0"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                            Text="{Binding}" />
+                    </StackPanel>
+                </DataTemplate>
+            </GroupBox.HeaderTemplate>
+            <local:SingleResultView
+                DataContext="{Binding ProcessedResult}" />
+        </GroupBox>
+        <!-- Result Image END -->
+    </Grid>
+</UserControl>

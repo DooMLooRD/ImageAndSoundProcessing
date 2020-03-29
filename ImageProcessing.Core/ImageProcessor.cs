@@ -3,7 +3,7 @@ using ImageProcessing.Core.Helpers;
 using ImageProcessing.Core.Interfaces;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
+using ImageProcessing.Core.Model;
 
 namespace ImageProcessing
 {
@@ -15,7 +15,7 @@ namespace ImageProcessing
             IProcessingOperation processBitmap,
             int offset = 0)
         {
-            using (var bitmapData = new CustomBitmapData(bitmap))
+            using (var bitmapData = new ExtendedBitmapData(bitmap))
             {
                 for (int y = offset; y < bitmapData.HeightInPixels - offset; y++)
                 {
@@ -27,9 +27,13 @@ namespace ImageProcessing
                     }
                 }
 
-                ImageHelper.ConvertToPixelFormat(bitmapData.CopyBitmap, out Bitmap convertedResult, bitmap.PixelFormat);
+                if(bitmap.PixelFormat == PixelFormat.Format1bppIndexed)
+                {
+                    ImageHelper.ConvertToPixelFormat(bitmapData.CopyBitmap, out Bitmap convertedBitmap, bitmap.PixelFormat);
+                    return convertedBitmap;
+                }
 
-                return convertedResult;
+                return bitmapData.CopyBitmap;
             }
         }
 
@@ -42,7 +46,7 @@ namespace ImageProcessing
                 result[i] = new long[3];
             }
 
-            using (var bitmapData = new CustomBitmapData(bitmap))
+            using (var bitmapData = new ExtendedBitmapData(bitmap))
             {
                 for (int y = 0; y < bitmapData.HeightInPixels; y++)
                 {
@@ -52,7 +56,7 @@ namespace ImageProcessing
                     {
                         byte* currentPixelPtr = ImageHelper.SetPixelPointer(bitmapData, x, y);
 
-                        for (int i = 0; i < 3; i++)
+                        for (int i = 0; i < bitmapData.BytesPerPixel; i++)
                         {
                             result[currentPixelPtr[i]][i]++;
                         }
@@ -72,8 +76,8 @@ namespace ImageProcessing
 
         public static unsafe FiltersEvaluationData FiltersEvaluation(Bitmap originalBitmap, Bitmap resultBitmap)
         {
-            using var bitmapData = new CustomBitmapData(originalBitmap);
-            using var resultBitmapData = new CustomBitmapData(resultBitmap);
+            using var bitmapData = new ExtendedBitmapData(originalBitmap);
+            using var resultBitmapData = new ExtendedBitmapData(resultBitmap);
 
             double sum = 0.0;
 

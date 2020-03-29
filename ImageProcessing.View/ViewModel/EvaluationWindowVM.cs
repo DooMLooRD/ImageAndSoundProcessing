@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Drawing;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using ImageProcessing.Core.Helpers;
 using ImageProcessing.View.ViewModel.Base;
 using Microsoft.Win32;
 

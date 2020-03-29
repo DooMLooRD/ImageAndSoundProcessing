@@ -1,6 +1,7 @@
 ﻿
 using ImageProcessing.Core.Helpers;
 using ImageProcessing.Core.Interfaces;
+using ImageProcessing.Core.Model;
 
 namespace ImageProcessing.Core.BasicImageOperations
 {
@@ -13,7 +14,7 @@ namespace ImageProcessing.Core.BasicImageOperations
             _brightnessFactor = brightnessFactor;
         }
 
-        public unsafe void ProcessPixel(CustomBitmapData customBitmap, int x, int y)
+        public unsafe void ProcessPixel(ExtendedBitmapData customBitmap, int x, int y)
         {
             byte* resultPixelPtr = ImageHelper.SetResultPixelPointer(customBitmap, x, y);
             byte* currentPixelPtr = ImageHelper.SetPixelPointer(customBitmap, x, y);
