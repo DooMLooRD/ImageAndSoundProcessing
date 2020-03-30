@@ -10,7 +10,6 @@ namespace ImageProcessing.Core.HistogramOperations
         private readonly int[] _gMin;
         private readonly int[] _gMax;
 
-
         public UniformProbabilityDensity(long[][] histogramValues, int aMin, int aMax)
             : this(histogramValues, aMin, aMax, aMin, aMax, aMin, aMax)
         {

@@ -6,11 +6,11 @@ namespace ImageProcessing.Core.FourierOperations
 {
     public class LowPassFilter : IProcessingFourierOperation
     {
-        public int FilterRadius { get; set; }
+        private readonly int _filterRadius;
 
         public LowPassFilter(int filterRarius)
         {
-            FilterRadius = filterRarius;
+            _filterRadius = filterRarius;
         }
 
         public void ProcessImage(Complex[][] complexData)
@@ -30,8 +30,8 @@ namespace ImageProcessing.Core.FourierOperations
                         continue;
                     }
 
-                    var widthFactor = Math.Pow((halfImageWidth - j) / (halfImageWidth - FilterRadius), 2);
-                    var heightFactor = Math.Pow((halfImageHeight - i) / (halfImageHeight - FilterRadius), 2);
+                    var widthFactor = Math.Pow((halfImageWidth - j) / (halfImageWidth - _filterRadius), 2);
+                    var heightFactor = Math.Pow((halfImageHeight - i) / (halfImageHeight - _filterRadius), 2);
 
                     if (Math.Sqrt(widthFactor + heightFactor) > 1)
                     {

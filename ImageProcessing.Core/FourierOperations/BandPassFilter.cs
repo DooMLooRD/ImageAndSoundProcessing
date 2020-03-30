@@ -6,13 +6,13 @@ namespace ImageProcessing.Core.FourierOperations
 {
     public class BandPassFilter : IProcessingFourierOperation
     {
-        public int FilterRadius { get; set; }
-        public int FilterSize { get; set; }
+        private readonly int _filterRadius;
+        private readonly int _filterSize;
 
         public BandPassFilter(int filterRarius, int filterSize)
         {
-            FilterRadius = filterRarius;
-            FilterSize = filterSize;
+            _filterRadius = filterRarius;
+            _filterSize = filterSize;
         }
 
         public void ProcessImage(Complex[][] complexData)
@@ -36,7 +36,7 @@ namespace ImageProcessing.Core.FourierOperations
                     var heightFactor = Math.Pow(halfImageHeight - i, 2);
                     var result = Math.Sqrt(widthFactor + heightFactor);
 
-                    if (result > FilterRadius + FilterSize || result < FilterRadius)
+                    if (result > _filterRadius + _filterSize || result < _filterRadius)
                     {
                         complexData[i][j] = 0;
                     }

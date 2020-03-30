@@ -6,13 +6,13 @@ namespace ImageProcessing.Core.FourierOperations
 {
     public class SpectrumFilter : IProcessingFourierOperation
     {
-        public int L { get; set; }
-        public int K { get; set; }
+        private readonly int _l;
+        private readonly int _k;
 
         public SpectrumFilter(int l, int k)
         {
-            L = l;
-            K = k;
+            _l = l;
+            _k = k;
         }
 
         public void ProcessImage(Complex[][] complexData)
@@ -26,9 +26,9 @@ namespace ImageProcessing.Core.FourierOperations
                 {
                     complexData[i][j] *= Complex.Exp(
                         new Complex(0,
-                        (-i * K * 2 * Math.PI / imageHeight) +
-                        (-j * L * 2 * Math.PI / imageWidth) +
-                        (Math.PI * (K + L))));
+                        (-i * _k * 2 * Math.PI / imageHeight) +
+                        (-j * _l * 2 * Math.PI / imageWidth) +
+                        (Math.PI * (_k + _l))));
                 }
             }
         }

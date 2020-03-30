@@ -1,39 +1,31 @@
 ﻿using ImageProcessing.Core.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Numerics;
-using System.Text;
 
 namespace ImageProcessing.Core.FourierOperations
 {
     public class EdgeDetectionFilter : IProcessingFourierOperation
     {
         private const double NOISE = 0.0001;
-        private const double EPISLON = 0.0000001;
+        private const double EPSILON = 0.0000001;
 
-        public double FilterAngle { get; set; }
-        public double FilterAngleOffset { get; set; }
-        public int FilterRadius { get; set; }
-
-
-        private double _firstHalfStartAngle;
-        private double _firstHalfEndAngle;
-        private double _secondHalfStartAngle;
-        private double _secondHalfEndAngle;
+        private readonly double _firstLineAngle;
+        private readonly double _secondLineAngle;
+        private readonly int _filterRadius;
 
         public EdgeDetectionFilter(double filterAngle, double filterAngleOffset, int filterRadius)
         {
-            filterAngleOffset %= 180;
-            filterAngleOffset = filterAngleOffset > 90 ? filterAngleOffset - 180 : filterAngleOffset;
+            _filterRadius = filterRadius;
 
-            FilterAngle = (filterAngle + NOISE) * 2 * Math.PI / 360;
-            FilterAngleOffset = (filterAngleOffset + NOISE) * 2 * Math.PI / 360;
-            FilterRadius = filterRadius;
+            filterAngleOffset %= 360;
+            filterAngleOffset = filterAngleOffset < 0 ? 360 + filterAngleOffset : filterAngleOffset;
+            filterAngleOffset = (filterAngleOffset + NOISE) * 2 * Math.PI / 360;
 
-            _firstHalfStartAngle = FilterAngle + FilterAngleOffset;
-            _firstHalfEndAngle = Math.PI * 2 - FilterAngle + FilterAngleOffset;
-            _secondHalfStartAngle = Math.PI - FilterAngle + FilterAngleOffset;
-            _secondHalfEndAngle = Math.PI + FilterAngle + FilterAngleOffset;
+            filterAngle /= 2;
+            filterAngle = (filterAngle + NOISE) * 2 * Math.PI / 360;
+
+            _firstLineAngle = filterAngle + filterAngleOffset;
+            _secondLineAngle = -filterAngle + filterAngleOffset;
         }
 
         public void ProcessImage(Complex[][] complexData)
@@ -53,8 +45,8 @@ namespace ImageProcessing.Core.FourierOperations
                         continue;
                     }
 
-                    var widthFactor = Math.Pow((halfImageWidth - j) / FilterRadius, 2);
-                    var heightFactor = Math.Pow((halfImageHeight - i) / FilterRadius, 2);
+                    var widthFactor = Math.Pow((halfImageWidth - j) / _filterRadius, 2);
+                    var heightFactor = Math.Pow((halfImageHeight - i) / _filterRadius, 2);
 
                     if (Math.Sqrt(widthFactor + heightFactor) < 1)
                     {
@@ -62,10 +54,8 @@ namespace ImageProcessing.Core.FourierOperations
                         continue;
                     }
 
-                    var firstHalfStart = Math.Tan(_firstHalfStartAngle) * (j - halfImageWidth);
-                    var firstHalfEnd = Math.Tan(_firstHalfEndAngle) * (j - halfImageWidth);
-                    var secondHalfStart = Math.Tan(_secondHalfStartAngle) * (j - halfImageWidth);
-                    var secondHalfEnd = Math.Tan(_secondHalfEndAngle) * (j - halfImageWidth);
+                    var firstLineValue = Math.Tan(_firstLineAngle) * (j - halfImageWidth);
+                    var secondLineValue = Math.Tan(_secondLineAngle) * (j - halfImageWidth);
 
                     bool firstHalfStartAssert;
                     bool firstHalfEndAssert;
@@ -74,19 +64,27 @@ namespace ImageProcessing.Core.FourierOperations
 
                     var currentValue = i - halfImageHeight;
 
-                    if (_firstHalfStartAngle - Math.PI / 2 < EPISLON && _secondHalfStartAngle - Math.PI / 2 > EPISLON)
+                    if ((_firstLineAngle - Math.PI / 2 > EPSILON && _secondLineAngle - Math.PI / 2 < EPSILON) ||
+                        (_firstLineAngle - 1.5 * Math.PI > EPSILON && _secondLineAngle - 1.5 * Math.PI < EPSILON))
                     {
-                        firstHalfStartAssert = firstHalfStart < currentValue;
-                        firstHalfEndAssert = firstHalfEnd > currentValue;
-                        secondHalfStartAssert = secondHalfStart < currentValue;
-                        secondHalfEndAssert = secondHalfEnd > currentValue;
+                        firstHalfStartAssert = firstLineValue > currentValue;
+                        firstHalfEndAssert = secondLineValue > currentValue;
+                        secondHalfStartAssert = secondLineValue < currentValue;
+                        secondHalfEndAssert = firstLineValue < currentValue;
+                    }
+                    else if (_firstLineAngle - Math.PI > EPSILON && _firstLineAngle - 1.5 * Math.PI < EPSILON)
+                    {
+                        firstHalfStartAssert = firstLineValue > currentValue;
+                        firstHalfEndAssert = secondLineValue < currentValue;
+                        secondHalfStartAssert = firstLineValue < currentValue;
+                        secondHalfEndAssert = secondLineValue > currentValue;
                     }
                     else
                     {
-                        firstHalfStartAssert = firstHalfStart > currentValue;
-                        firstHalfEndAssert = secondHalfStart > currentValue;
-                        secondHalfStartAssert = firstHalfEnd < currentValue;
-                        secondHalfEndAssert = secondHalfEnd < currentValue;
+                        firstHalfStartAssert = firstLineValue < currentValue;
+                        firstHalfEndAssert = secondLineValue > currentValue;
+                        secondHalfStartAssert = firstLineValue > currentValue;
+                        secondHalfEndAssert = secondLineValue < currentValue;
                     }
 
                     if (!((firstHalfStartAssert && firstHalfEndAssert) || (secondHalfStartAssert && secondHalfEndAssert)))
