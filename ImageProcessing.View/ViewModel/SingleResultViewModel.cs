@@ -58,6 +58,11 @@ namespace ImageProcessing.View.ViewModel
             MagnitudeImage = ImageGdiHelper.LoadBitmap(ImageComponents.MagnitudeImage);
         }
 
+        public void LoadResultData(System.Drawing.Bitmap bitmap)
+        {
+            ResultImage = ImageGdiHelper.LoadBitmap(bitmap);
+        }
+
         public async void LoadData(ImageComponents imageComponents)
         {
             await Task.Run(() =>

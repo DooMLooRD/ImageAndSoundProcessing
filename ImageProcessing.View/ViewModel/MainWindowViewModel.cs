@@ -1,5 +1,7 @@
 ﻿using ImageProcessing.View.ViewModel.Base;
 using ImageProcessing.View.Windows;
+using Microsoft.Win32;
+using System.Drawing;
 using System.Windows.Input;
 
 namespace ImageProcessing.View.ViewModel
@@ -11,6 +13,7 @@ namespace ImageProcessing.View.ViewModel
         public ResultsViewModel ResultsViewModel { get; set; }
         public BasicViewModel BasicViewModel { get; set; }
         public ComplexViewModel ComplexViewModel { get; set; }
+        public RegionGrowingViewModel RegionGrowingViewModel { get; set; }
 
 
         public ICommand OpenEvalWindow { get; set; }
@@ -21,14 +24,31 @@ namespace ImageProcessing.View.ViewModel
         public MainWindowViewModel()
         {
             ResultsViewModel = new ResultsViewModel();
-            BasicViewModel= new BasicViewModel(ResultsViewModel);
+            BasicViewModel = new BasicViewModel(ResultsViewModel);
             ComplexViewModel = new ComplexViewModel(ResultsViewModel);
+            RegionGrowingViewModel = new RegionGrowingViewModel();
 
-            Open = new RelayCommand(ResultsViewModel.LoadImage);
+            Open = new RelayCommand(Load);
             OpenEvalWindow = new RelayCommand(OnEvalWindowOpen);
             Save = new RelayCommand(ResultsViewModel.SaveResult);
         }
-        
+
+        private void Load()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Image files (*.jpg; *.bmp; *.png)|*.jpg; *.bmp; *.png",
+                RestoreDirectory = true
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                var bitmap = new Bitmap(openFileDialog.FileName);
+
+                RegionGrowingViewModel.LoadOriginalImage(bitmap);
+                ResultsViewModel.LoadImage(bitmap);
+            }
+        }
         private void OnEvalWindowOpen()
         {
             EvaluationWindowVM vm = new EvaluationWindowVM();

@@ -1,10 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 namespace ImageProcessing.Core.Helpers
 {
     public static class CollectionHelper
     {
+        public static void Shuffle<T>(List<T> collection)
+        {
+            Random rng = new Random();
+            int n = collection.Count();
+            while (n > 1)
+            {
+                int k = rng.Next(n);
+                n--;
+                T temp = collection[n];
+                collection[n] = collection[k];
+                collection[k] = temp;
+            }
+        }
+
         public static Complex[][] SwapRowColumn(Complex[][] data)
         {
             int swappedCols = data.Length;

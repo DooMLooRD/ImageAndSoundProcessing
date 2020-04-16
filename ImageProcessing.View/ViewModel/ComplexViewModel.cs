@@ -2,6 +2,7 @@
 using ImageProcessing.Core.FourierOperations;
 using ImageProcessing.Core.Interfaces;
 using ImageProcessing.Core.Model;
+using ImageProcessing.Core.Segmentation;
 using ImageProcessing.View.ViewModel.Base;
 using System.Collections.Generic;
 using System.Threading.Tasks;

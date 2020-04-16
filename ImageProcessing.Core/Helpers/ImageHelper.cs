@@ -1,4 +1,5 @@
 ﻿using ImageProcessing.Core.Model;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 
@@ -15,6 +16,11 @@ namespace ImageProcessing.Core.Helpers
             sum += 0.071 * blue;
 
             return sum;
+        }
+
+        public static byte Normalize(int value, int max)
+        {
+            return (byte)(10 + (value * (255 - 10) / max));
         }
 
         public static bool IsGreyscale(PixelFormat pixelFormat)
@@ -36,6 +42,56 @@ namespace ImageProcessing.Core.Helpers
             }
 
             return value;
+        }
+
+        public static List<int> GetProcessedNeighbourhood(SingleBitmapData bitmapData, int position, int[] imagePixels)
+        {
+            int x = position % bitmapData.WidthInBytes;
+            int y = position / bitmapData.WidthInBytes;
+            var neighbourhood = new List<int>();
+
+            for (int j = -2; j < 3; j++)
+            {
+                for (int k = -2; k < 3; k++)
+                {
+                    var currY = y + j;
+                    var currX = x + k;
+                    var currPos = currY * bitmapData.WidthInBytes + currX;
+                    if (currY >= 0 && currY < bitmapData.HeightInPixels &&
+                        currX >= 0 && currX < bitmapData.WidthInBytes &&
+                        imagePixels[currPos] != 0)
+                    {
+                        neighbourhood.Add(currPos);
+                    }
+                }
+            }
+
+            return neighbourhood;
+        }
+
+        public static List<int> GetNeighbourhood(SingleBitmapData bitmapData, int position, HashSet<int> visited, int[] imagePixels)
+        {
+            int x = position % bitmapData.WidthInBytes;
+            int y = position / bitmapData.WidthInBytes;
+            var neighbourhood = new List<int>();
+
+            for (int j = -1; j < 2; j++)
+            {
+                for (int k = -1; k < 2; k++)
+                {
+                    var currY = y + j;
+                    var currX = x + k;
+                    var currPos = currY * bitmapData.WidthInBytes + currX;
+                    if (currY >= 0 && currY < bitmapData.HeightInPixels &&
+                        currX >= 0 && currX < bitmapData.WidthInBytes &&
+                        !visited.Contains(currPos) && imagePixels[currPos] == 0)
+                    {
+                        neighbourhood.Add(currPos);
+                    }
+                }
+            }
+
+            return neighbourhood;
         }
 
         public unsafe static byte*[] GetNeighborhood(ExtendedBitmapData bitmapData, int x, int y)

@@ -27,6 +27,19 @@ namespace ImageProcessing.Core.Model
             FirstPixelPtr = (byte*)BitmapData.Scan0;
         }
 
+        public SingleBitmapData(Bitmap bitmap, PixelFormat pixelFormat)
+        {
+            Bitmap = bitmap.Clone(new Rectangle(0, 0, bitmap.Width, bitmap.Height), pixelFormat);
+
+            BitmapData = Bitmap.LockBits(new Rectangle(0, 0, Bitmap.Width, Bitmap.Height),
+                ImageLockMode.ReadWrite, Bitmap.PixelFormat);
+            BytesPerPixel = Image.GetPixelFormatSize(Bitmap.PixelFormat) / 8;
+            HeightInPixels = BitmapData.Height;
+            WidthInBytes = BitmapData.Width * BytesPerPixel;
+            FirstPixelPtr = (byte*)BitmapData.Scan0;
+        }
+
+
         public void Dispose()
         {
             Bitmap.UnlockBits(BitmapData);

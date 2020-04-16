@@ -3,6 +3,7 @@ using ImageProcessing.View.ViewModel.Base;
 using Microsoft.Win32;
 using System;
 using System.Diagnostics;
+using System.Drawing;
 
 namespace ImageProcessing.View.ViewModel
 {
@@ -21,20 +22,11 @@ namespace ImageProcessing.View.ViewModel
             ProcessedResult = new SingleResultViewModel();
         }
 
-        public void LoadImage()
+        public void LoadImage(Bitmap bitmap)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = Environment.CurrentDirectory;
-            openFileDialog.Filter = "Image files (*.jpg; *.bmp; *.png)|*.jpg; *.bmp; *.png";
-            openFileDialog.RestoreDirectory = true;
-
-            if (openFileDialog.ShowDialog() == true)
-            {
-                var bitmap = new System.Drawing.Bitmap(openFileDialog.FileName);
-                HistogramSeparateFactorsVisible.Visible = !ImageHelper.IsGreyscale(bitmap.PixelFormat);
-                UseSeparateCanals = ImageHelper.IsGreyscale(bitmap.PixelFormat) ? false : UseSeparateCanals;
-                OriginalResult.LoadData(bitmap);
-            }
+            HistogramSeparateFactorsVisible.Visible = !ImageHelper.IsGreyscale(bitmap.PixelFormat);
+            UseSeparateCanals = ImageHelper.IsGreyscale(bitmap.PixelFormat) ? false : UseSeparateCanals;
+            OriginalResult.LoadData(bitmap);
         }
 
         public void SaveResult()
