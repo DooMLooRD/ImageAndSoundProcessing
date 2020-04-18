@@ -4,6 +4,7 @@ using ImageProcessing.Core.Model;
 using ImageProcessing.View.Helpers;
 using ImageProcessing.View.ViewModel.Base;
 using ImageProcessing.View.Windows;
+using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -17,8 +18,13 @@ namespace ImageProcessing.View.ViewModel
         public ICommand EnlargeMagnitudeImage { get; set; }
 
         public ImageSource ResultImage { get; set; }
+        public Bitmap ResultBitmap { get; set; }
+
         public ImageSource PhaseImage { get; set; }
+        public Bitmap PhaseBitmap { get; set; }
+
         public ImageSource MagnitudeImage { get; set; }
+        public Bitmap MagnitudeBitmap { get; set; }
 
         public ImageComponents ImageComponents { get; set; }
 
@@ -29,14 +35,14 @@ namespace ImageProcessing.View.ViewModel
         public SingleResultViewModel()
         {
             HistogramVm = new HistogramVM(Histogram);
-            EnlargeResultImage = new RelayCommand(() => ShowImageInFullWindow(ResultImage));
-            EnlargePhaseImage = new RelayCommand(() => ShowImageInFullWindow(PhaseImage));
-            EnlargeMagnitudeImage = new RelayCommand(() => ShowImageInFullWindow(MagnitudeImage));
+            EnlargeResultImage = new RelayCommand(() => ShowImageInFullWindow(ResultImage, ResultBitmap));
+            EnlargePhaseImage = new RelayCommand(() => ShowImageInFullWindow(PhaseImage, PhaseBitmap));
+            EnlargeMagnitudeImage = new RelayCommand(() => ShowImageInFullWindow(MagnitudeImage, MagnitudeBitmap));
         }
 
-        public void ShowImageInFullWindow(ImageSource imageSource)
+        public void ShowImageInFullWindow(ImageSource imageSource, Bitmap bitmap)
         {
-            EnlargedImageWindowVM vm = new EnlargedImageWindowVM(imageSource);
+            EnlargedImageWindowVM vm = new EnlargedImageWindowVM(imageSource, bitmap);
             EnlargedImageWindow window = new EnlargedImageWindow()
             {
                 DataContext = vm
@@ -44,7 +50,7 @@ namespace ImageProcessing.View.ViewModel
             window.Show();
         }
 
-        public async void LoadData(System.Drawing.Bitmap bitmap)
+        public async void LoadData(Bitmap bitmap)
         {
             await Task.Run(() =>
             {
@@ -53,14 +59,15 @@ namespace ImageProcessing.View.ViewModel
             });
 
             HistogramVm = new HistogramVM(Histogram);
+            
+            ResultBitmap = ImageComponents.Image;
             ResultImage = ImageGdiHelper.LoadBitmap(ImageComponents.Image);
+            
+            PhaseBitmap = ImageComponents.PhaseImage;
             PhaseImage = ImageGdiHelper.LoadBitmap(ImageComponents.PhaseImage);
-            MagnitudeImage = ImageGdiHelper.LoadBitmap(ImageComponents.MagnitudeImage);
-        }
 
-        public void LoadResultData(System.Drawing.Bitmap bitmap)
-        {
-            ResultImage = ImageGdiHelper.LoadBitmap(bitmap);
+            MagnitudeBitmap = ImageComponents.MagnitudeImage;
+            MagnitudeImage = ImageGdiHelper.LoadBitmap(ImageComponents.MagnitudeImage);
         }
 
         public async void LoadData(ImageComponents imageComponents)
@@ -72,8 +79,14 @@ namespace ImageProcessing.View.ViewModel
 
             ImageComponents = imageComponents;
             HistogramVm = new HistogramVM(Histogram);
+
+            ResultBitmap = ImageComponents.Image;
             ResultImage = ImageGdiHelper.LoadBitmap(ImageComponents.Image);
+
+            PhaseBitmap = ImageComponents.PhaseImage;
             PhaseImage = ImageGdiHelper.LoadBitmap(ImageComponents.PhaseImage);
+
+            MagnitudeBitmap = ImageComponents.MagnitudeImage;
             MagnitudeImage = ImageGdiHelper.LoadBitmap(ImageComponents.MagnitudeImage);
         }
     }

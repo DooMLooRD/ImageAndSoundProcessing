@@ -18,20 +18,7 @@
     d:DesignHeight="450"
     d:DesignWidth="800">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition
-                Height="auto" />
-            <RowDefinition
-                Height="*" />
-        </Grid.RowDefinitions>
-        <StackPanel
-            Orientation="Horizontal"
-            Margin="10"
-            Grid.Row="0">
 
-        </StackPanel>
-        <Grid
-            Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition
                     Width="*" />
@@ -47,7 +34,7 @@
                 BorderThickness="0"
                 materialDesign:ShadowAssist.ShadowDepth="Depth5"
                 Padding="0"
-                Margin="15 10">
+                Margin="16 16 0 0">
                 <GroupBox.HeaderTemplate>
                     <DataTemplate>
                         <StackPanel
@@ -91,7 +78,18 @@
                             Margin="0 15"
                             Content="Set Mask Folder"
                             Command="{Binding SetMaskFolderCommand}" />
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                Margin="0"
+                                VerticalAlignment="Center"
+                                Text="Path:" />
+                            <TextBlock
+                                Margin="5"
+                                VerticalAlignment="Center"
+                                Text="{Binding SaveFolderPath}" />
+                        </StackPanel>
 
+                        
                         <Button
                             Margin="0 15"
                             Content="Apply"
@@ -114,8 +112,8 @@
                     BorderThickness="0"
                     Style="{DynamicResource MaterialDesignCardGroupBox}"
                     Padding="0"
-                    Margin="15 10"
-                    VerticalAlignment="Top">
+                Margin="16 16 16 10"
+                    VerticalAlignment="Stretch">
                     <GroupBox.HeaderTemplate>
                         <DataTemplate>
                             <StackPanel
@@ -151,8 +149,8 @@
                     BorderThickness="0"
                     Style="{DynamicResource MaterialDesignCardGroupBox}"
                     Padding="0"
-                    Margin="15 10"
-                    VerticalAlignment="Top">
+                VerticalAlignment="Stretch"
+                Margin="16 16 16 10">
                     <GroupBox.HeaderTemplate>
                         <DataTemplate>
                             <StackPanel
@@ -191,8 +189,8 @@
                 BorderThickness="0"
                 Style="{DynamicResource MaterialDesignCardGroupBox}"
                 Padding="0"
-                Margin="0 10"
-                VerticalAlignment="Top">
+                Margin="0 16 0 10"
+                VerticalAlignment="Stretch">
                 <GroupBox.HeaderTemplate>
                     <DataTemplate>
                         <StackPanel
@@ -241,8 +239,8 @@
                 BorderThickness="0"
                 Style="{DynamicResource MaterialDesignCardGroupBox}"
                 Padding="0"
-                Margin="15 10"
-                VerticalAlignment="Top">
+                Margin="16 16 10 10"
+                VerticalAlignment="Stretch">
                 <GroupBox.HeaderTemplate>
                     <DataTemplate>
                         <StackPanel
@@ -273,6 +271,5 @@
                 </Button>
             </GroupBox>
 
-        </Grid>
     </Grid>
 </UserControl>

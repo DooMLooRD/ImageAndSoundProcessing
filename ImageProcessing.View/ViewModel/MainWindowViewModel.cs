@@ -17,9 +17,9 @@ namespace ImageProcessing.View.ViewModel
 
 
         public ICommand OpenEvalWindow { get; set; }
-        public ICommand Save { get; set; }
 
         public bool IsComplexView { get; set; }
+        public bool IsRegionGrowingView { get; set; }
 
         public MainWindowViewModel()
         {
@@ -30,14 +30,13 @@ namespace ImageProcessing.View.ViewModel
 
             Open = new RelayCommand(Load);
             OpenEvalWindow = new RelayCommand(OnEvalWindowOpen);
-            Save = new RelayCommand(ResultsViewModel.SaveResult);
         }
 
         private void Load()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
-                Filter = "Image files (*.jpg; *.bmp; *.png)|*.jpg; *.bmp; *.png",
+                Filter = "Image files (*.bmp; *.png, *.tif)|*.bmp; *.png; *.tif",
                 RestoreDirectory = true
             };
 
@@ -49,6 +48,7 @@ namespace ImageProcessing.View.ViewModel
                 ResultsViewModel.LoadImage(bitmap);
             }
         }
+
         private void OnEvalWindowOpen()
         {
             EvaluationWindowVM vm = new EvaluationWindowVM();

@@ -1,5 +1,6 @@
 ﻿using ImageProcessing.Core.Helpers;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Numerics;
 
 namespace ImageProcessing.Core.Model
@@ -26,8 +27,8 @@ namespace ImageProcessing.Core.Model
 
             FourierHelper.SwapQuadrants(ComplexData);
 
-            using (var phaseBitmapData = new SingleBitmapData(bitmap, true))
-            using (var magnitudeBitmapData = new SingleBitmapData(bitmap, true))
+            using (var phaseBitmapData = new SingleBitmapData(bitmap, PixelFormat.Format8bppIndexed))
+            using (var magnitudeBitmapData = new SingleBitmapData(bitmap, PixelFormat.Format8bppIndexed))
             {
                 for (int y = 0; y < phaseBitmapData.HeightInPixels; y++)
                 {

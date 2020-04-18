@@ -2,12 +2,10 @@
 using ImageProcessing.View.Helpers;
 using ImageProcessing.View.ViewModel.Base;
 using ImageProcessing.View.Windows;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -34,6 +32,7 @@ namespace ImageProcessing.View.ViewModel
         public Bitmap SegmentedBitmap { get; set; }
 
         public ImageSource ImageWithMask { get; set; }
+        public Bitmap ImageWithMaskBitmap { get; set; }
 
         public ObservableCollection<MaskVM> Masks { get; set; }
 
@@ -44,9 +43,9 @@ namespace ImageProcessing.View.ViewModel
             SetMaskFolderCommand = new RelayCommand(SetMaskFolder);
             ApplyOperationCommand = new RelayCommand(ApplyOperation);
             SetMaskCommand = new RelayCommand<Bitmap>(SetMask);
-            EnlargeOriginalImage = new RelayCommand(() => ShowImageInFullWindow(OriginalImage));
-            EnlargeSegmentedImage = new RelayCommand(() => ShowImageInFullWindow(SegmentedImage));
-            EnlargeImageWithMask = new RelayCommand(() => ShowImageInFullWindow(ImageWithMask));
+            EnlargeOriginalImage = new RelayCommand(() => ShowImageInFullWindow(OriginalImage, OriginalBitmap));
+            EnlargeSegmentedImage = new RelayCommand(() => ShowImageInFullWindow(SegmentedImage, SegmentedBitmap));
+            EnlargeImageWithMask = new RelayCommand(() => ShowImageInFullWindow(ImageWithMask, ImageWithMaskBitmap));
         }
 
         public void LoadOriginalImage(Bitmap bitmap)
@@ -55,9 +54,9 @@ namespace ImageProcessing.View.ViewModel
             OriginalImage = ImageGdiHelper.LoadBitmap(bitmap);
         }
 
-        private void ShowImageInFullWindow(ImageSource imageSource)
+        private void ShowImageInFullWindow(ImageSource imageSource, Bitmap bitmap)
         {
-            EnlargedImageWindowVM vm = new EnlargedImageWindowVM(imageSource);
+            EnlargedImageWindowVM vm = new EnlargedImageWindowVM(imageSource, bitmap);
             EnlargedImageWindow window = new EnlargedImageWindow()
             {
                 DataContext = vm
@@ -69,6 +68,7 @@ namespace ImageProcessing.View.ViewModel
         {
             var regionGrowing = new RegionGrowing();
             var result = regionGrowing.SetMask(OriginalBitmap, bitmap);
+            ImageWithMaskBitmap = result;
             ImageWithMask = ImageGdiHelper.LoadBitmap(result);
         }
 
@@ -83,6 +83,7 @@ namespace ImageProcessing.View.ViewModel
                 results = regionGrowing.CreateMasks(OriginalBitmap, Threshold, MinPixelNumber, SaveFolderPath);
             });
 
+            SegmentedBitmap = results[0];
             SegmentedImage = ImageGdiHelper.LoadBitmap(results[0]);
 
             Masks = new ObservableCollection<MaskVM>();

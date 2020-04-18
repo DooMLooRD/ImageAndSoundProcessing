@@ -40,14 +40,6 @@
                             Kind="OpenInApp"></materialDesign:PackIcon>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem
-                    Header="_Save Result Image"
-                    Command="{Binding Save}">
-                    <MenuItem.Icon>
-                        <materialDesign:PackIcon
-                            Kind="ContentSave" />
-                    </MenuItem.Icon>
-                </MenuItem>
             </MenuItem>
             <MenuItem
                 Header="_View">
@@ -55,6 +47,11 @@
                     Header="Complex View"
                     IsCheckable="True"
                     IsChecked="{Binding IsComplexView}">
+                </MenuItem>
+                <MenuItem
+                    Header="Region Growing View"
+                    IsCheckable="True"
+                    IsChecked="{Binding IsRegionGrowingView}">
                 </MenuItem>
                 <MenuItem
                     Header="Show Evaluation Window"
@@ -70,12 +67,12 @@
         <Grid
             Grid.Row="1">
             <Grid
-                Visibility="{Binding Path=IsComplexView, Converter={StaticResource ParametrizedBooleanToVisibilityConverter}, ConverterParameter=true}">
+                Visibility="{Binding Path=IsRegionGrowingView, Converter={StaticResource ParametrizedBooleanToVisibilityConverter}, ConverterParameter=true}">
                 <usercontrols:RegionGrowingView
                     DataContext="{Binding RegionGrowingViewModel}" />
             </Grid>
             <Grid
-                Visibility="{Binding Path=IsComplexView, Converter={StaticResource ParametrizedBooleanToVisibilityConverter}, ConverterParameter=false}">
+                Visibility="{Binding Path=IsRegionGrowingView, Converter={StaticResource ParametrizedBooleanToVisibilityConverter}, ConverterParameter=false}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition
                         Width="*" />

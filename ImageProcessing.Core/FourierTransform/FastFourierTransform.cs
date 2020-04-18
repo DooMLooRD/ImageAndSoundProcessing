@@ -2,6 +2,7 @@
 using ImageProcessing.Core.Model;
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Numerics;
 
 namespace ImageProcessing.Core.FourierTransform
@@ -30,7 +31,7 @@ namespace ImageProcessing.Core.FourierTransform
 
             CollectionHelper.ApplyOperation(swappedData, c => c / swappedData[0].Length);
 
-            using (var bitmapData = new SingleBitmapData(originalBitmap, true))
+            using (var bitmapData = new SingleBitmapData(originalBitmap, PixelFormat.Format8bppIndexed))
             {
                 for (int y = 0; y < bitmapData.HeightInPixels; y++)
                 {
@@ -48,9 +49,9 @@ namespace ImageProcessing.Core.FourierTransform
 
         public static ImageComponents FFT2D(Bitmap bitmap)
         {
-            using (SingleBitmapData bitmapData = new SingleBitmapData(bitmap, false))
+            using (SingleBitmapData bitmapData = new SingleBitmapData(bitmap, PixelFormat.Format8bppIndexed))
             {
-                var data = CollectionHelper.Create2DArray<Complex>(bitmapData.WidthInBytes, bitmapData.HeightInPixels);
+                    var data = CollectionHelper.Create2DArray<Complex>(bitmapData.WidthInBytes, bitmapData.HeightInPixels);
 
                 for (int y = 0; y < bitmapData.HeightInPixels; y++)
                 {

@@ -24,7 +24,10 @@ namespace ImageProcessing.Core.Model
         {
             OriginalBitmap = bitmap;
 
-            if (OriginalBitmap.PixelFormat == PixelFormat.Format1bppIndexed)
+            if (OriginalBitmap.PixelFormat == PixelFormat.Format1bppIndexed || 
+                OriginalBitmap.PixelFormat == PixelFormat.Format32bppArgb ||
+                OriginalBitmap.PixelFormat == PixelFormat.Format32bppPArgb ||
+                OriginalBitmap.PixelFormat == PixelFormat.Format32bppRgb)
             {
                 ImageHelper.ConvertToPixelFormat(bitmap, out Bitmap result, PixelFormat.Format24bppRgb);
                 OriginalBitmap = result;

@@ -30,8 +30,8 @@ namespace ImageProcessing.Core.FourierOperations
                         continue;
                     }
 
-                    var widthFactor = Math.Pow((halfImageWidth - j) / (halfImageWidth - _filterRadius), 2);
-                    var heightFactor = Math.Pow((halfImageHeight - i) / (halfImageHeight - _filterRadius), 2);
+                    var widthFactor = Math.Pow((halfImageWidth - j) / _filterRadius, 2);
+                    var heightFactor = Math.Pow((halfImageHeight - i) / _filterRadius, 2);
 
                     if (Math.Sqrt(widthFactor + heightFactor) > 1)
                     {
