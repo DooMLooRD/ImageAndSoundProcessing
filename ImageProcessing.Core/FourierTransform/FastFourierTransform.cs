@@ -51,7 +51,7 @@ namespace ImageProcessing.Core.FourierTransform
         {
             using (SingleBitmapData bitmapData = new SingleBitmapData(bitmap, PixelFormat.Format8bppIndexed))
             {
-                    var data = CollectionHelper.Create2DArray<Complex>(bitmapData.WidthInBytes, bitmapData.HeightInPixels);
+                var data = CollectionHelper.Create2DArray<Complex>(bitmapData.WidthInBytes, bitmapData.HeightInPixels);
 
                 for (int y = 0; y < bitmapData.HeightInPixels; y++)
                 {

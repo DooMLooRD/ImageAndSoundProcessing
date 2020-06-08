@@ -15,8 +15,8 @@ namespace ImageProcessing.View.ViewModel
 {
     public class RegionGrowingViewModel : BaseViewModel
     {
-        public int Threshold { get; set; }
-        public int MinPixelNumber { get; set; }
+        public int Threshold { get; set; } = 50;
+        public int MinPixelNumber { get; set; } = 400;
 
         public ICommand SetMaskFolderCommand { get; set; }
         public ICommand ApplyOperationCommand { get; set; }
